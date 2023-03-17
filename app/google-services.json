@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "833324000510",
+    "firebase_url": "https://moca-test-5bfbb-default-rtdb.firebaseio.com",
+    "project_id": "moca-test-5bfbb",
+    "storage_bucket": "moca-test-5bfbb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833324000510:android:a33786f6248100d309f1af",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833324000510-vt7kp45ph3c9vjjjjmrp84fqh7gsu075.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgWf5r1L-YNsmbYLm8Ua4mcLPo4uR-52M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833324000510-vt7kp45ph3c9vjjjjmrp84fqh7gsu075.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

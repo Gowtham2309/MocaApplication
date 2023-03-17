@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myapplication">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application android:theme="@style/Theme.MyApplication">
+        <activity
+            android:name=".SampleJava"
+            android:exported="false" />
+        <activity
+            android:name=".Sample"
+            android:exported="false" />
+        <activity
+            android:name=".cdt_Drawing"
+            android:exported="false" />
+        <activity
+            android:name=".Speech_to_text"
+            android:exported="false" />
+        <activity
+            android:name=".Test"
+            android:exported="false" />
+        <activity
+            android:name=".Naming"
+            android:exported="false" />
+        <activity
+            android:name=".Orientation"
+            android:exported="false" />
+        <activity
+            android:name=".combined_btn_repatingdigit"
+            android:exported="false" />
+        <activity
+            android:name=".Abstraction"
+            android:exported="false" />
+        <activity
+            android:name=".gaming"
+            android:exported="false" />
+        <activity
+            android:name=".Log_In"
+            android:exported="false" />
+        <activity
+            android:name=".Language_repeatSentence"
+            android:exported="false" />
+        <activity
+            android:name=".Letter_Identification"
+            android:exported="false" />
+        <activity
+            android:name=".Attention"
+            android:exported="false" />
+        <activity
+            android:name=".SubtractionMain"
+            android:exported="false" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".Attentation_repeatingDigit"
+            android:exported="false" />
+        <activity
+            android:name=".Intro"
+            android:exported="true">
+
+            <!-- <activity -->
+            <!-- android:name=".Naming" -->
+            <!-- android:exported="true" > -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
