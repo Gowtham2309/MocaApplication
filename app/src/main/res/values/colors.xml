@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- custom colors for the theme -->
+    <color name="eggshell">#F4E6DA</color>
+    <color name="paleChestnut">#DEBBBB</color>
+    <color name="thistle">#C9BBDE</color>
+    <color name="pewterBlue">#8DB3B1</color>
+    <color name="jetStream">#B5C8C2</color>
+    <color name="davysGray">#5A5859</color>
+    <color name="middleGrey">#8C877A</color>
 </resources>
