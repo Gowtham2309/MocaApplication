@@ -3,13 +3,13 @@
     <item android:state_pressed="true" android:color="@color/jetStream">
         <shape android:shape="rectangle">
             <solid android:color="@color/jetStream" />
-            <corners android:radius="10dp" />
+            <corners android:radius="200dp" />
         </shape>
     </item>
     <item android:color="@color/pewterBlue">
         <shape android:shape="rectangle">
-            <solid android:color="@color/pewterBlue" />
-            <corners android:radius="10dp" />
+            <solid android:color="@color/paleChestnut" />
+            <corners android:radius="200dp" />
         </shape>
     </item>
 </selector>
