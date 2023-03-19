@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +40,12 @@ public class Register extends AppCompatActivity {
                 System.out.println("_______________________________________________");
                 String nam=name.getText().toString();
                 String str="0";
+
+                // check if all the fields are entered
+                if ( Email.isEmpty() || pass.isEmpty() || ag.isEmpty() || num.isEmpty() || nam.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 rootNode=FirebaseDatabase.getInstance();
                 UserRegisterHelper helper=new UserRegisterHelper(nam,num,Email,pass,ag,str);
