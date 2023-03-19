@@ -32,6 +32,13 @@ public class Log_In extends AppCompatActivity {
             public void onClick(View view) {
                 final String phtxt=phonelog.getText().toString();
                 final String passtxt=passlog.getText().toString();
+
+                // if any fields are empty notify user and don't login
+                if (phtxt.isEmpty() || passtxt.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 dbreferance.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
