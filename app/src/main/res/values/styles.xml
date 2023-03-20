@@ -22,4 +22,10 @@
         <item name="android:textColor">@color/paleChestnut</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
+    <style name="contentText">
+        <item name="android:textColor">@color/davysGray</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>
