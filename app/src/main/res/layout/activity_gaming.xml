@@ -169,7 +169,7 @@
         android:onClick="display"
         android:text="Display"
         android:paddingVertical="30dp"
-        android:background="@drawable/button_background_rounded"
+        android:background="@drawable/button_background_rounded_thistle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
