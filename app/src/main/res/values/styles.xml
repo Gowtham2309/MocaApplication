@@ -14,4 +14,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="minHeight">48dp</item>
     </style>
+
+    <style name="pageTitle">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:textColor">@color/paleChestnut</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
 </resources>

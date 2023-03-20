@@ -19,11 +19,8 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:textColor="@color/paleChestnut"
             android:text="Log in"
-            android:layout_margin="20dp" />
+            style="@style/pageTitle"/>
 
         <EditText
             android:id="@+id/Phonelogin"

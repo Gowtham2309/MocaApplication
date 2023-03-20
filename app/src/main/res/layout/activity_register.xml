@@ -16,12 +16,8 @@
             android:id="@+id/Registration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="Registration"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:textColor="@color/paleChestnut"
-            android:layout_margin="20dp"/>
+            style="@style/pageTitle"/>
 
         <EditText
             android:id="@+id/emailtext"
