@@ -10,6 +10,7 @@
 
     <TextView
         android:id="@+id/textView"
+        style="@style/pageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -23,6 +24,9 @@
         android:id="@+id/button12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_background_semi_rounded"
+        android:drawableEnd="@drawable/arrow_right"
+        android:padding="20dp"
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +37,8 @@
     <ImageButton
         android:id="@+id/imageButton6"
         android:layout_width="wrap_content"
+        android:background="@drawable/button_background_rounded_thistle"
+        android:padding="20dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/button12"
         app:layout_constraintEnd_toEndOf="parent"
