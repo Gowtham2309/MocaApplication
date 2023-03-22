@@ -9,25 +9,38 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.SQLOutput;
+import java.time.Duration;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Letter_Identification extends AppCompatActivity {
 
     MediaPlayer mediaPlayer;
     TextView textview2;
-    Button buttonn;
+    Button buttonn, btnHit, btnPlay;
     ArrayList<Character> letter=new ArrayList<>();
     ArrayList<Long> duration_list=new ArrayList<>();
-
     ArrayList<Long> button_click_time=new ArrayList<>();
-    char c;
+    char charToIdentify;
+    final String TEST_NAME = "LETTER IDENTIFICATION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_letter_identification);
+
         textview2=findViewById(R.id.textView2);
+        buttonn=findViewById(R.id.button17);
+        btnHit = findViewById(R.id.button18);
+        btnPlay = findViewById(R.id.button14);
+
+        // Add the available letters to the letter list
         letter.add('a');
         letter.add('b');
         letter.add('c');
@@ -42,11 +55,14 @@ public class Letter_Identification extends AppCompatActivity {
         letter.add('l');
         letter.add('m');
         letter.add('n');
+
+        // Select the letter to be identified
         Random rnd = new Random();
         int index = rnd.nextInt(letter.size());
-        buttonn=findViewById(R.id.button17);
-        c=letter.get(index);
-        textview2.setText("Hit the SPACEBAR when letter "+c+" occurs");
+        charToIdentify=letter.get(index);
+        textview2.setText(String.format("Press the 'Hit' button when letter %s occurs", charToIdentify));
+
+        // Onclick listeners
         buttonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +71,17 @@ public class Letter_Identification extends AppCompatActivity {
                 System.out.println(button_click_time);
             }
         });
+
+        btnPlay.setOnClickListener(view -> {
+            // disable the button. At the end of the play function will be re-enabled
+            btnPlay.setEnabled(false);
+            // clearing both lists which tracks the clicks
+            duration_list.clear();
+            button_click_time.clear();
+            // run the play function in a separate thread
+            new Thread(() -> play(view)).start();
+        });
+        btnHit.setOnClickListener(this::press);
     }
     public ArrayList<Integer> getAudioFiles() {
         ArrayList<Integer> audioFiles = new ArrayList<>();
@@ -86,7 +113,7 @@ public class Letter_Identification extends AppCompatActivity {
         ArrayList<MediaPlayer> mediaPlayers = new ArrayList<>();
         ArrayList<Integer> play_list=new ArrayList<>();
 
-        int target_letter=c%97;
+        int target_letter = charToIdentify % 97;
         Random rnd = new Random();
         for(int i=1;i<=15;i++)
         {
@@ -122,28 +149,75 @@ public class Letter_Identification extends AppCompatActivity {
         {
             int x=play_list.get(i);
             mediaPlayers.get(x).start();
-            long d=System.currentTimeMillis();
-            duration_list.add(d);
-            while(mediaPlayers.get(x).isPlaying())
-            {
-                continue;
-            }
-            //mediaPlayers.get(x).reset();
-           try{
-              Thread.sleep(500);
 
-          }
-          catch (Exception e)
-           {
-                System.out.println(e);
-          }
+            // add only when the target letter is spelled
+            if (x == target_letter) {
+                long d = System.currentTimeMillis();
+                duration_list.add(d);
+            }
+            while(mediaPlayers.get(x).isPlaying()) {} // wait until the media player completes
+            //mediaPlayers.get(x).reset();
+
+            // sleep to give time before the next sound plays
+            try{
+               Thread.sleep(500);
+            }
+            catch (Exception e)
+            {
+               System.out.println(e);
+            }
             System.out.println(i);
         }
-        System.out.println(duration_list);
+        System.out.println("DURATION LIST "+duration_list);
+        System.out.println("HIT CLICK LIST "+button_click_time);
         audioFiles.clear();
         play_list.clear();
         mediaPlayers.clear();
 
-        duration_list.clear();
+        // calculate the score
+        int score = calculateScore(duration_list, button_click_time);
+        System.out.println("SCORE: "+score);
+        // update the score in the ScoreMaintainer
+        ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
+        scoreMaintainer.updateScore(TEST_NAME, score);
+        System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
+
+        runOnUiThread(() -> btnPlay.setEnabled(true));
+    }
+
+    private int calculateScore(ArrayList<Long> charList, ArrayList<Long> clickList) {
+        // charList - list of time when the target char is spelled
+        // clickList - list of time when the hit button is pressed
+        float errorOnClickCount = (float) Math.abs(charList.size() - clickList.size()) / charList.size();
+        // 1. map the time in charList to time in clickList based on min time difference
+        HashMap<Long, Long> pairs = new HashMap<>();
+        for (long charSpellTime: charList) {
+            if (clickList.size() == 0) break; // when clickList size < charList size
+            long pair = clickList.get(0);
+            for (long clickTime: clickList) {
+                if (Math.abs(charSpellTime - pair) > Math.abs(charSpellTime - clickTime))
+                    pair = clickTime;
+            }
+            pairs.put(charSpellTime, pair);
+            clickList.remove(pair); // to avoid duplication
+        }
+        // 2. based on extras and time difference calculate the score
+        float diffAllowedMilliSeconds = 1.3f;
+        int correctCount = 0;
+        for (Map.Entry<Long, Long> entry: pairs.entrySet()) {
+            float diff = (float) Math.abs(new Date(entry.getValue()).getTime() - new Date(entry.getKey()).getTime()) / 1000;
+            System.out.println(diff);
+            if ( diff <= diffAllowedMilliSeconds)
+                correctCount++;
+        }
+        float errorOnClickTime = 1 - ((float) correctCount / charList.size());
+
+        System.out.println("click time error : "+errorOnClickTime);
+        System.out.println("click count error : "+errorOnClickCount);
+
+        float ALLOWED_ERROR_PERCENTAGE = 0.2f;
+        if ((errorOnClickTime + errorOnClickCount) <= ALLOWED_ERROR_PERCENTAGE) return 1;
+
+        return 0;
     }
 }
