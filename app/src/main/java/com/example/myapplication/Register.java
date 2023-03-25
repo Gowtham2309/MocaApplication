@@ -60,9 +60,10 @@ public class Register extends AppCompatActivity {
                 editor.putString(getString(R.string.login), num);
                 editor.apply();
 
-                Intent intent = new Intent(Register.this, gaming.class);
+                Intent intent = new Intent(Register.this, Test.class);
+                intent.putExtra("Message_Key", num);
                 startActivity(intent);
-
+                finish();
             }
         });
     }
