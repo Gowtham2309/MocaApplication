@@ -9,13 +9,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class cdt_Drawing extends AppCompatActivity {
     private ImageView imageView,imageView_clr;
@@ -32,14 +38,7 @@ public class cdt_Drawing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cdt_drawing);
-        button=findViewById(R.id.button3);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(cdt_Drawing.this,gaming.class);
-                startActivity(intent);
-            }
-        });
+//
         ActivityCompat.requestPermissions(this
                 ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -121,6 +120,22 @@ public class cdt_Drawing extends AppCompatActivity {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+        File file = new File(Environment.getExternalStorageDirectory(), "myimage.png");
+        try
+        {
+            FileOutputStream stream = new FileOutputStream(file);
+            bit_map.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream.flush();
+            stream.close();
+            Toast.makeText(this, "Image saved", Toast.LENGTH_SHORT).show();
+        }
+        catch (IOException e)
+        {
+            Toast.makeText(this, "Error saving image", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+        Intent intent=new Intent(cdt_Drawing.this,gaming.class);
+        startActivity(intent);
 
     }
 
