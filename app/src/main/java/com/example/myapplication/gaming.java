@@ -89,6 +89,7 @@ public class gaming extends AppCompatActivity {
 
                 ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
                 scoreMaintainer.updateScore(TEST_NAME, score);
+                System.out.println("SCORE : "+scoreMaintainer.getScore(TEST_NAME));
 
                 Intent intent = new Intent(gaming.this, Naming.class);
                 startActivity(intent);
@@ -146,8 +147,52 @@ public class gaming extends AppCompatActivity {
         }
     }
 
+    public void reset() {
+        for (Button btn :
+                copyButtonList) {
+            btn.setEnabled(true);
+            ans.clear();
+        }
+    }
+
     private int calculateScore() {
-        // TODO: implement the score calculation for visuo-spatial page
+        String requiredOutput = "1A2B3C4D5E";
+        StringBuilder userAnswer = new StringBuilder();
+        for (String s:
+             ans) {
+            userAnswer.append(s);
+        }
+        System.out.println(requiredOutput);
+        System.out.println(userAnswer);
+        int correctCount = lcs(
+                requiredOutput, userAnswer.toString(), requiredOutput.length(), userAnswer.length()
+        );
+        System.out.println(correctCount);
+        float allowedErrorPercentage = 0.1f;
+        if (((float) correctCount / requiredOutput.length()) + allowedErrorPercentage >= 1.0f) return 1;
         return 0;
     }
+
+    int lcs(String X, String Y, int m, int n)
+    {
+        int[][] L = new int[m + 1][n + 1];
+
+        // Following steps build L[m+1][n+1] in bottom up
+        // fashion. Note that L[i][j] contains length of LCS
+        // of X[0..i-1] and Y[0..j-1]
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 || j == 0)
+                    L[i][j] = 0;
+                else if (X.charAt(i - 1) == Y.charAt(j - 1))
+                    L[i][j] = L[i - 1][j - 1] + 1;
+                else
+                    L[i][j] = max(L[i - 1][j], L[i][j - 1]);
+            }
+        }
+        return L[m][n];
+    }
+
+    // Utility function to get max of 2 integers
+    int max(int a, int b) { return (a > b) ? a : b; }
 }
