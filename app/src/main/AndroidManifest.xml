@@ -9,57 +9,75 @@
 
     <application android:theme="@style/Theme.MyApplication">
         <activity
+            android:screenOrientation="portrait"
             android:name=".SampleJava"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Sample"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".cdt_Drawing"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Speech_to_text"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Test"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Naming"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Orientation"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".combined_btn_repatingdigit"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Abstraction"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".gaming"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Log_In"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Language_repeatSentence"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Letter_Identification"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Attention"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".SubtractionMain"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Register"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Attentation_repeatingDigit"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Intro"
             android:exported="true">
 
