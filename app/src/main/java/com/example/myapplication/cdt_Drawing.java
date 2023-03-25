@@ -38,7 +38,6 @@ public class cdt_Drawing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cdt_drawing);
-//
         ActivityCompat.requestPermissions(this
                 ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -120,7 +119,7 @@ public class cdt_Drawing extends AppCompatActivity {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        File file = new File(Environment.getExternalStorageDirectory(), "myimage.png");
+        File file = new File(Environment.getExternalStorageDirectory(), "myimage1.png");
         try
         {
             FileOutputStream stream = new FileOutputStream(file);

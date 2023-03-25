@@ -17,7 +17,7 @@ public class SubtractionMain extends AppCompatActivity {
     Integer minuend;
     Integer subtrahend,min,max;
     EditText txt1,txt2,txt3,txt4,txt5;
-    int s_score=0;
+    double sub_score=0;
     Button button2,buttonn;
     final static String TEST_NAME = "SUBTRACTION";
     @Override
@@ -89,6 +89,11 @@ public class SubtractionMain extends AppCompatActivity {
 
                  System.out.println(count);
                   System.out.println("-------------------------------------------------------");
+                  if(count>3) sub_score=3;
+                  else if(count>=2) sub_score=2;
+                  else if(count>=1) sub_score=1;
+                  else sub_score=0;
+                System.out.println(sub_score);
                  Intent intent = new Intent(SubtractionMain.this, Language_repeatSentence.class);
                  startActivity(intent);
             }
