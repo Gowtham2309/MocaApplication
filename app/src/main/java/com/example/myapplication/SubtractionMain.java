@@ -21,13 +21,13 @@ public class SubtractionMain extends AppCompatActivity {
     Button button2,buttonn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_subtraction_main);
         txt1=findViewById(R.id.ans1);
         txt2=findViewById(R.id.ans2);
         txt3=findViewById(R.id.ans3);
         txt4=findViewById(R.id.ans4);
         txt5=findViewById(R.id.ans5);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subtraction_main);
         textview3=findViewById(R.id.textView3);
         button2=findViewById(R.id.button2);
 
@@ -54,7 +54,7 @@ public class SubtractionMain extends AppCompatActivity {
         buttonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(txt1);
+                System.out.println("Text one : " + txt1.getText());
                 System.out.println(txt2);
                 System.out.println(txt3);
                 System.out.println(txt4);
