@@ -51,8 +51,9 @@ public class Register extends AppCompatActivity {
                 UserRegisterHelper helper=new UserRegisterHelper(nam,num,Email,pass,ag,str);
                 reference= rootNode.getReferenceFromUrl("https://moca-test-5bfbb-default-rtdb.firebaseio.com/");
                 reference.child("Users").child(num).setValue(helper);
-                    Intent intent = new Intent(Register.this, gaming.class);
-                    startActivity(intent);
+
+                Intent intent = new Intent(Register.this, gaming.class);
+                startActivity(intent);
 
             }
         });

@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Log_In extends AppCompatActivity {
     EditText phonelog,passlog;
-    Button buttonn;
+    Button buttonn, btnToRegister;
     DatabaseReference dbreferance= FirebaseDatabase.getInstance().getReferenceFromUrl("https://moca-test-5bfbb-default-rtdb.firebaseio.com/");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,7 @@ public class Log_In extends AppCompatActivity {
         phonelog=findViewById(R.id.Phonelogin);
         passlog=findViewById(R.id.Passlogin);
         buttonn=findViewById(R.id.button24);
+        btnToRegister = findViewById(R.id.buttonToRegister);
         buttonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +67,11 @@ public class Log_In extends AppCompatActivity {
                     }
                 });
             }
+        });
+
+        btnToRegister.setOnClickListener((View view) -> {
+            Intent intent = new Intent(this, Register.class);
+            startActivity(intent);
         });
     }
 }

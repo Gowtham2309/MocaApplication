@@ -47,11 +47,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="LOG IN"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Passlogin"
+            android:background="@drawable/button_background"
+            android:layout_margin="20dp"
+            style="@style/buttonStyle"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="First time ?"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/buttonToRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REGISTER"
             android:background="@drawable/button_background"
             android:layout_margin="20dp"
             style="@style/buttonStyle"/>
