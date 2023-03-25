@@ -1,6 +1,10 @@
 package com.example.myapplication;
 
+import static android.app.PendingIntent.getActivity;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -24,6 +28,9 @@ public class Log_In extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        checkLoggedInStatus(); // if already logged in go in directly
+
         phonelog=findViewById(R.id.Phonelogin);
         passlog=findViewById(R.id.Passlogin);
         buttonn=findViewById(R.id.button24);
@@ -48,7 +55,13 @@ public class Log_In extends AppCompatActivity {
                             final String getpassword=snapshot.child(phtxt).child("password").getValue(String.class);
                             if(getpassword.equals(passtxt))
                             {
-                                Toast.makeText(getApplicationContext(),"Log in Success",Toast.LENGTH_LONG).show();
+                                // adding the phone number to shared prefs
+                                SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedPrefsName), Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putString(getString(R.string.login), phtxt);
+                                editor.apply();
+
+                                Toast.makeText(getApplicationContext(),"Log in Success",Toast.LENGTH_SHORT).show();
                                 Intent intent=new Intent(Log_In.this,Test.class);
                                 intent.putExtra("Message_Key",phtxt);
                                 startActivity(intent);
@@ -73,5 +86,19 @@ public class Log_In extends AppCompatActivity {
             Intent intent = new Intent(this, Register.class);
             startActivity(intent);
         });
+    }
+
+    private void checkLoggedInStatus() {
+        /* If the user is already logged in and not logged out then send him to next page without logging in again*/
+        SharedPreferences prefs = getSharedPreferences("Common", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putBoolean("isLoggedIn", true);
+        String loginPhoneNumber = prefs.getString(getString(R.string.login), "");
+        if (!loginPhoneNumber.isEmpty()) {
+            Intent intent = new Intent(Log_In.this, Test.class);
+            intent.putExtra("Message_Key", loginPhoneNumber);
+            startActivity(intent);
+            finish();
+        }
     }
 }

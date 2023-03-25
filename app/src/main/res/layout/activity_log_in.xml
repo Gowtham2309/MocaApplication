@@ -26,9 +26,10 @@
             android:id="@+id/Phonelogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:ems="12"
             android:hint="Phone Number"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:gravity="center"
             android:layout_margin="20dp"/>
 
@@ -37,8 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="12"
+            android:minHeight="48dp"
             android:hint="Password"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             android:gravity="center"
             android:layout_margin="20dp" />
 
