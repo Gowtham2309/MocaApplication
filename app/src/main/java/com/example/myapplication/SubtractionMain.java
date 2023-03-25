@@ -93,7 +93,7 @@ public class SubtractionMain extends AppCompatActivity {
                   else if(count>=2) sub_score=2;
                   else if(count>=1) sub_score=1;
                   else sub_score=0;
-                System.out.println(sub_score12);
+                System.out.println(sub_score);
                  Intent intent = new Intent(SubtractionMain.this, Language_repeatSentence.class);
                  startActivity(intent);
             }
