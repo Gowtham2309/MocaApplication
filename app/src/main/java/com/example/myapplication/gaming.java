@@ -1,9 +1,16 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +18,8 @@ import java.util.ArrayList;
 
 public class gaming extends AppCompatActivity {
     ArrayList<String> ans=new ArrayList<>();
+    ArrayList<Button> copyButtonList = new ArrayList<>();
+    final static String TEST_NAME = "VISUO-SPATIAL"; // actual category in MoCA
     Button button1,button2,button3,button4,button5,button6,button7,button8,button9,button10,buttonn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +36,7 @@ public class gaming extends AppCompatActivity {
         button9=findViewById(R.id.button35);
         button10=findViewById(R.id.button25);
         buttonn=findViewById(R.id.button33);
-        ArrayList<Button> buttonlist=new ArrayList<>();
+        ArrayList<Button> buttonlist =new ArrayList<>();
 
         ArrayList reflist=new ArrayList();
         buttonlist.add(button1);
@@ -40,6 +49,7 @@ public class gaming extends AppCompatActivity {
         buttonlist.add(button8);
         buttonlist.add(button9);
         buttonlist.add(button10);
+        copyButtonList.addAll(buttonlist);
         int min=1,max=5,count=0;
         while(count<5)
         {
@@ -74,63 +84,70 @@ public class gaming extends AppCompatActivity {
         buttonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println(ans);
+                int score = calculateScore();
+
+                ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
+                scoreMaintainer.updateScore(TEST_NAME, score);
+
                 Intent intent = new Intent(gaming.this, Naming.class);
                 startActivity(intent);
             }
         });
+
+        // Delay the showing of pop up view, to let the view created first
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                showInstruction(findViewById(R.id.gamingRootLayout));
+            }
+        }, 100);
     }
-    public void btnPrssed1(View view)
-    {
-        String str=button1.getText().toString();
-        ans.add(str);
+
+    public void gameButtonPressed(View view) {
+        Button btn = (Button) view;
+        ans.add(btn.getText().toString());
+        btn.setEnabled(false);
     }
-    public void btnPrssed2(View view)
-    {
-        String str=button2.getText().toString();
-        ans.add(str);
+
+    public void showInstruction(View view) {
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.game_pop_up, null);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        popupWindow.setElevation(20);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
-    public void btnPrssed3(View view)
-    {
-        String str=button3.getText().toString();
-        ans.add(str);
+
+    public void reset(View view) {
+        for (Button btn :
+                copyButtonList) {
+            btn.setEnabled(true);
+            ans.clear();
+        }
     }
-    public void btnPrssed4(View view)
-    {
-        String str=button4.getText().toString();
-        ans.add(str);
-    }
-    public void btnPrssed5(View view)
-    {
-        String str=button5.getText().toString();
-        ans.add(str);
-    }
-    public void btnPrssed6(View view)
-    {
-        String str=button6.getText().toString();
-        ans.add(str);
-    }
-    public void btnPrssed7(View view)
-    {
-        String str=button7.getText().toString();
-        ans.add(str);
-    }
-    public void btnPrssed8(View view)
-    {
-        String str=button8.getText().toString();
-        ans.add(str);
-    }
-    public void btnPrssed9(View view)
-    {
-        String str=button9.getText().toString();
-        ans.add(str);
-    }
-    public void btnPrssed10(View view)
-    {
-        String str=button10.getText().toString();
-        ans.add(str);
-    }
-    public void display(View view)
-    {
-        System.out.println(ans);
+
+    private int calculateScore() {
+        // TODO: implement the score calculation for visuo-spatial page
+        return 0;
     }
 }

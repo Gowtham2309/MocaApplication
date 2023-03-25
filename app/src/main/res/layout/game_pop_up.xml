@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        android:padding="10dp"
+        style="@style/contentText"
+        android:textSize="22sp"
+        android:text="Press the buttons in the increasing order intertwining number then letters\nExample: 1 -> A -> 2 ..."/>
+
+</RelativeLayout>
