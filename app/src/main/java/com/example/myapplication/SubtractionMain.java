@@ -19,6 +19,7 @@ public class SubtractionMain extends AppCompatActivity {
     EditText txt1,txt2,txt3,txt4,txt5;
     int s_score=0;
     Button button2,buttonn;
+    final static String TEST_NAME = "SUBTRACTION";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
