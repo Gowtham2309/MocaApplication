@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 public class cdt_Drawing extends AppCompatActivity {
-    private ImageView imageView;
+    private ImageView imageView,imageView_clr;
 
     private float float_startX = -1, float_startY = -1,
             float_endX = -1, float_endY = -1;
@@ -45,6 +46,13 @@ public class cdt_Drawing extends AppCompatActivity {
                 PackageManager.PERMISSION_GRANTED);
 
         imageView = findViewById(R.id.imageView5);
+        imageView_clr=findViewById(R.id.imageView4);
+        imageView_clr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                canva.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            }
+        });
     }
 
     private void drawPaintSketchImage(){
@@ -90,22 +98,29 @@ public class cdt_Drawing extends AppCompatActivity {
         }
         return super.onTouchEvent(event);
     }
+
+    public void clearCanvas() {
+        // Clear the canvas
+
+        canva.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+    }
+
     public void buttonSaveImage(View view)
     {
-//        File fileSaveImage = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-//                Calendar.getInstance().getTime().toString() + ".jpg");
-//        try {
-//            FileOutputStream fileOutputStream = new FileOutputStream(fileSaveImage);
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-//            fileOutputStream.flush();
-//            fileOutputStream.close();
-//            Toast.makeText(this,
-//                    "File Saved Successfully",
-//                    Toast.LENGTH_LONG).show();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        File fileSaveImage = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                Calendar.getInstance().getTime().toString() + ".jpg");
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(fileSaveImage);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            Toast.makeText(this,
+                    "File Saved Successfully",
+                    Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
