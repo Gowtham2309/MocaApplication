@@ -107,20 +107,20 @@ public class cdt_Drawing extends AppCompatActivity {
 
     public void buttonSaveImage(View view)
     {
-        File fileSaveImage = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                Calendar.getInstance().getTime().toString() + ".jpg");
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(fileSaveImage);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            fileOutputStream.flush();
-            fileOutputStream.close();
-            Toast.makeText(this,
-                    "File Saved Successfully",
-                    Toast.LENGTH_LONG).show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        File fileSaveImage = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+//                Calendar.getInstance().getTime().toString() + ".jpg");
+//        try {
+//            FileOutputStream fileOutputStream = new FileOutputStream(fileSaveImage);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+//            fileOutputStream.flush();
+//            fileOutputStream.close();
+//            Toast.makeText(this,
+//                    "File Saved Successfully",
+//                    Toast.LENGTH_LONG).show();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 
