@@ -32,7 +32,7 @@ public class Attentation_repeatingDigit extends AppCompatActivity
     MediaPlayer mediaPlayer;
     protected static final int RESULT_SPEECH = 1, RESULT_SPEECH1 = 2;
     public ImageButton btnSpeak, btnSpeak1;
-    Button buttonn;
+    Button buttonn, btnPlayOne, btnPlayTwo;
     ArrayList<Integer> fwd=new ArrayList<>();
     ArrayList<Integer> rev=new ArrayList<>();
     //TextView tv1;
@@ -43,6 +43,8 @@ public class Attentation_repeatingDigit extends AppCompatActivity
         setContentView(R.layout.activity_attentation_repeating_digit);
         btnSpeak = findViewById(R.id.imageButton4);
         btnSpeak1 = findViewById(R.id.imageButton5);
+        btnPlayOne = findViewById(R.id.button4);
+        btnPlayTwo = findViewById(R.id.button10);
         //tv1=findViewById(R.id.first);
         //tv2=findViewById(R.id.second);
         /*if (! Python.isStarted()) {
@@ -119,8 +121,6 @@ public class Attentation_repeatingDigit extends AppCompatActivity
             case RESULT_SPEECH1:
                 if (resultCode == RESULT_OK && data != null) {
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
-
                 }
                 break;
         }
@@ -139,88 +139,118 @@ public class Attentation_repeatingDigit extends AppCompatActivity
         audioFiles.add(R.raw.ninemoca);
         return audioFiles;
     }
-    public void play1(View v)
-    {
-        ArrayList<Integer> audioFiles = getAudioFiles();
-        ArrayList<MediaPlayer> mediaPlayers = new ArrayList<>();
+    public void play1(View v) {
+        btnPlayOne.setEnabled(false);
+        btnSpeak.setEnabled(false);
+        btnSpeak1.setEnabled(false);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                rev.clear();
+                ArrayList<Integer> audioFiles = getAudioFiles();
+                ArrayList<MediaPlayer> mediaPlayers = new ArrayList<>();
 
 
-        for (int i = 0; i < audioFiles.size(); i++) {
-            MediaPlayer mediaPlayer = MediaPlayer.create(this, audioFiles.get(i));
-            mediaPlayers.add(mediaPlayer);
-        }
-        Random random=new Random();
-        for(int i=0;i<3;i++)
-        {
+                for (int i = 0; i < audioFiles.size(); i++) {
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), audioFiles.get(i));
+                    mediaPlayers.add(mediaPlayer);
+                }
+                Random random=new Random();
+                for(int i=0;i<3;i++)
+                {
 
-            int index = random.nextInt(audioFiles.size());
-            while(rev.contains(index))
-            {
-                index = random.nextInt(audioFiles.size());
-            }
-            rev.add(index);
-        }
-        for (int i = 0; i < rev.size(); i++) {
-            int x=rev.get(i);
-            mediaPlayers.get(x).start();
-            while(mediaPlayers.get(x).isPlaying())
-            {
-                continue;
-            }
-            try{
-                Thread.sleep(500);
+                    int index = random.nextInt(audioFiles.size());
+                    while(rev.contains(index))
+                    {
+                        index = random.nextInt(audioFiles.size());
+                    }
+                    rev.add(index);
+                }
+                for (int i = 0; i < rev.size(); i++) {
+                    int x=rev.get(i);
+                    mediaPlayers.get(x).start();
+                    while(mediaPlayers.get(x).isPlaying())
+                    {
+                        continue;
+                    }
+                    try{
+                        Thread.sleep(500);
 
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println(e);
+                    }
+                    //mediaPlayers.get(x).reset();
+                }
+                audioFiles.clear();
+                mediaPlayers.clear();
+
+                runOnUiThread(() -> {
+                    btnPlayOne.setEnabled(true);
+                    btnSpeak.setEnabled(true);
+                    btnSpeak1.setEnabled(true);
+                });
             }
-            catch (Exception e)
-            {
-                System.out.println(e);
-            }
-            //mediaPlayers.get(x).reset();
-        }
-        audioFiles.clear();
-        mediaPlayers.clear();
-        rev.clear();
+        }).start();
     }
     public void play(View v) {
-        ArrayList<Integer> audioFiles = getAudioFiles();
-        ArrayList<MediaPlayer> mediaPlayers = new ArrayList<>();
+        btnPlayTwo.setEnabled(false);
+        btnSpeak.setEnabled(false);
+        btnSpeak1.setEnabled(false);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                fwd.clear();
+                ArrayList<Integer> audioFiles = getAudioFiles();
+                ArrayList<MediaPlayer> mediaPlayers = new ArrayList<>();
 
 
-        for (int i = 0; i < audioFiles.size(); i++) {
-            MediaPlayer mediaPlayer = MediaPlayer.create(this, audioFiles.get(i));
-            mediaPlayers.add(mediaPlayer);
-        }
-        Random random=new Random();
-        for(int i=0;i<5;i++)
-        {
+                for (int i = 0; i < audioFiles.size(); i++) {
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), audioFiles.get(i));
+                    mediaPlayers.add(mediaPlayer);
+                }
+                Random random=new Random();
+                for(int i=0;i<5;i++)
+                {
 
-            int index = random.nextInt(audioFiles.size());
-            while(fwd.contains(index))
-            {
-                index = random.nextInt(audioFiles.size());
+                    int index = random.nextInt(audioFiles.size());
+                    while(fwd.contains(index))
+                    {
+                        index = random.nextInt(audioFiles.size());
+                    }
+                    fwd.add(index);
+                }
+                for (int i = 0; i < fwd.size(); i++) {
+                    int x=fwd.get(i);
+
+                    mediaPlayers.get(x).start();
+                    while(mediaPlayers.get(x).isPlaying())
+                    {
+                        continue;
+                    }
+                    try{
+                        Thread.sleep(500);
+
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println(e);
+                    }
+                    mediaPlayers.get(x).reset();
+                }
+                audioFiles.clear();
+                mediaPlayers.clear();
+
+                runOnUiThread(() -> {
+                    btnPlayTwo.setEnabled(true);
+                    btnSpeak.setEnabled(true);
+                    btnSpeak1.setEnabled(true);
+                });
             }
-            fwd.add(index);
-        }
-        for (int i = 0; i < fwd.size(); i++) {
-            int x=fwd.get(i);
+        }).start();
 
-            mediaPlayers.get(x).start();
-            while(mediaPlayers.get(x).isPlaying())
-            {
-                continue;
-            }
-            try{
-                Thread.sleep(500);
-
-            }
-            catch (Exception e)
-            {
-                System.out.println(e);
-            }
-            mediaPlayers.get(x).reset();
-        }
-        audioFiles.clear();
-        mediaPlayers.clear();
-        fwd.clear();
     }
 }
