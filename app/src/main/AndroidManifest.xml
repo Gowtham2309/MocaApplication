@@ -9,6 +9,9 @@
 
     <application android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".ExpandedHistory"
+            android:exported="false" />
+        <activity
             android:name=".History"
             android:exported="false" />
         <activity

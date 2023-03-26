@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +52,16 @@ public class History extends AppCompatActivity {
                         listView = findViewById(R.id.historyListView);
                         HistoryListAdapter listAdapter = new HistoryListAdapter(activity, historyData);
                         listView.setAdapter(listAdapter);
+
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                                Intent intent = new Intent(activity, ExpandedHistory.class);
+                                intent.putExtra(ExpandedHistory.PHONE_NUM, phoneNumber);
+                                intent.putExtra(ExpandedHistory.TIMESTAMP, historyData.get(position).timestamp);
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
     }

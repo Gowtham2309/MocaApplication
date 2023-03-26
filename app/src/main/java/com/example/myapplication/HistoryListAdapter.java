@@ -74,7 +74,7 @@ class HistoryPair {
     }
 
     public String getDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(this.date);
     }
     public String getTime() {
