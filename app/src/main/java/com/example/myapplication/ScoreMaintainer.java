@@ -1,5 +1,11 @@
 package com.example.myapplication;
 
+import android.content.SharedPreferences;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,5 +48,20 @@ public class ScoreMaintainer {
             scores.put(testName, 0);
         }
         return scores.get(testName);
+    }
+
+    public void uploadToFirebase(String phoneNumber) {
+        /* Uploads all the score to the firebase realtime database under the History -> phone number branch */
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
+        DatabaseReference reference = rootNode.getReferenceFromUrl("https://moca-test-5bfbb-default-rtdb.firebaseio.com/");
+
+        long time = System.currentTimeMillis();
+        DatabaseReference userHistoryRef = reference.child("History").child(phoneNumber).child(Long.toString(time));
+
+        // setting the values
+        for(Map.Entry<String, Integer> entry:scores.entrySet()) {
+            userHistoryRef.child(entry.getKey()).setValue(entry.getValue());
+        }
+        userHistoryRef.child("totalScore").setValue(getTotalScore());
     }
 }
