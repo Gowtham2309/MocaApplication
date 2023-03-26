@@ -18,6 +18,16 @@
         android:padding="20dp"/>
 
     <Button
+        android:id="@+id/buttonToHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:text="History"
+        android:background="@drawable/button_background_semi_rounded"
+        android:padding="20dp"/>
+
+    <Button
         android:id="@+id/button40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

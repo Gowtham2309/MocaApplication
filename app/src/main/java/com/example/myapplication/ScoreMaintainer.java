@@ -2,8 +2,14 @@ package com.example.myapplication;
 
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -51,17 +57,16 @@ public class ScoreMaintainer {
     }
 
     public void uploadToFirebase(String phoneNumber) {
-        /* Uploads all the score to the firebase realtime database under the History -> phone number branch */
-        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
-        DatabaseReference reference = rootNode.getReferenceFromUrl("https://moca-test-5bfbb-default-rtdb.firebaseio.com/");
+        /* Uploads all the score to the firebase firestore under the History -> phone number branch */
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String time = Long.toString(System.currentTimeMillis());
+        db.collection(phoneNumber).document(time).set(scores)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("Failed to upload the data to database");
+                    }
+                });
 
-        long time = System.currentTimeMillis();
-        DatabaseReference userHistoryRef = reference.child("History").child(phoneNumber).child(Long.toString(time));
-
-        // setting the values
-        for(Map.Entry<String, Integer> entry:scores.entrySet()) {
-            userHistoryRef.child(entry.getKey()).setValue(entry.getValue());
-        }
-        userHistoryRef.child("totalScore").setValue(getTotalScore());
     }
 }
