@@ -24,6 +24,11 @@ public class SubtractionMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subtraction_main);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Subtraction");
+        } catch (NullPointerException ignored) {}
+
         txt1=findViewById(R.id.ans1);
         txt2=findViewById(R.id.ans2);
         txt3=findViewById(R.id.ans3);

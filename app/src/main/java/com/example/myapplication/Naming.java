@@ -13,6 +13,11 @@ public class Naming extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_naming);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Naming");
+        } catch (NullPointerException ignored) {}
+
         buttonn=findViewById(R.id.button39);
         buttonn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -29,6 +29,11 @@ public class History extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("History");
+        } catch (NullPointerException ignored) {}
+
 
         SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedPrefsName), Context.MODE_PRIVATE);
         String phoneNumber = prefs.getString(getString(R.string.login), "");

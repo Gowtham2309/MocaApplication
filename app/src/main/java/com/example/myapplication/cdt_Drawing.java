@@ -42,6 +42,10 @@ public class cdt_Drawing extends AppCompatActivity {
                 ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 PackageManager.PERMISSION_GRANTED);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Clock Drawing Test");
+        } catch (NullPointerException ignored) {}
 
         imageView = findViewById(R.id.imageView5);
         imageView_clr=findViewById(R.id.imageView4);
