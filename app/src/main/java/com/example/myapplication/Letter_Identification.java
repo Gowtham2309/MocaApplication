@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -181,6 +183,9 @@ public class Letter_Identification extends AppCompatActivity {
         ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
         scoreMaintainer.updateScore(TEST_NAME, score);
         System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
+
+//        SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedPrefsName), Context.MODE_PRIVATE);
+//        scoreMaintainer.uploadToFirebase( prefs.getString(getString(R.string.login), "") );
 
         runOnUiThread(() -> btnPlay.setEnabled(true));
     }

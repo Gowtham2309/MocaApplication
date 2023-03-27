@@ -9,9 +9,12 @@
 
     <application android:theme="@style/Theme.MyApplication">
         <activity
+
             android:name=".Orientation"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
+
             android:name=".SampleJava"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -36,6 +39,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+
             android:name=".combined_btn_repatingdigit"
             android:exported="false"
             android:screenOrientation="portrait" />

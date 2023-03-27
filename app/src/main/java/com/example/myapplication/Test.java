@@ -17,6 +17,7 @@ public class Test extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         Button btn=findViewById(R.id.button40);
         Button btnLogOut = findViewById(R.id.buttonLogOut);
+        Button btnToHistory = findViewById(R.id.buttonToHistory);
 
         Intent intent_txt=getIntent();
         String str=intent_txt.getStringExtra("Message_Key");
@@ -38,6 +39,11 @@ public class Test extends AppCompatActivity {
             Intent intent = new Intent(Test.this, Log_In.class);
             startActivity(intent);
             finish();
+        });
+
+        btnToHistory.setOnClickListener((View view) -> {
+            Intent intent = new Intent(Test.this, History.class);
+            startActivity(intent);
         });
     }
 
