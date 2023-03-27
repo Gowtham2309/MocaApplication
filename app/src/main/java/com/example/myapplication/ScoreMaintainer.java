@@ -56,6 +56,10 @@ public class ScoreMaintainer {
         return scores.get(testName);
     }
 
+    public Map<String, Integer> getAllScores() {
+        return scores;
+    }
+
     public void uploadToFirebase(String phoneNumber) {
         /* Uploads all the score to the firebase firestore under the History -> phone number branch */
         FirebaseFirestore db = FirebaseFirestore.getInstance();
