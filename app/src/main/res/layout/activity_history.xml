@@ -15,4 +15,11 @@
         android:divider="@color/white"
         android:dividerHeight="2dp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/contentText"
+        android:layout_margin="30dp"
+        android:id="@+id/historyNoData"/>
+
 </LinearLayout>
