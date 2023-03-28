@@ -17,8 +17,9 @@ public class Abstraction extends AppCompatActivity {
         buttonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(Abstraction.this,Orientation.class);
-//                startActivity(intent);
+                System.out.println(Orientation.class);
+                Intent intent = new Intent(Abstraction.this,Orientation.class);
+                startActivity(intent);
             }
         });
     }

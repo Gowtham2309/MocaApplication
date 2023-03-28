@@ -99,6 +99,9 @@ public class SubtractionMain extends AppCompatActivity {
                   else if(count>=1) sub_score=1;
                   else sub_score=0;
                 System.out.println(sub_score);
+                ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
+                scoreMaintainer.updateScore(TEST_NAME, (int)sub_score);
+                System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
                  Intent intent = new Intent(SubtractionMain.this, Language_repeatSentence.class);
                  startActivity(intent);
             }
