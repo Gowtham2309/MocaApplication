@@ -28,6 +28,11 @@ public class Log_In extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Log in");
+        } catch (NullPointerException ignored) {}
+
 
         checkLoggedInStatus(); // if already logged in go in directly
 

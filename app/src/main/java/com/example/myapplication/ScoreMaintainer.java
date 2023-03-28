@@ -56,8 +56,13 @@ public class ScoreMaintainer {
         return scores.get(testName);
     }
 
-    public void uploadToFirebase(String phoneNumber) {
-        /* Uploads all the score to the firebase firestore under the History -> phone number branch */
+    public Map<String, Integer> getAllScores() {
+        return scores;
+    }
+
+    public String uploadToFirebase(String phoneNumber) {
+        /* Uploads all the score to the firebase firestore under the History -> phone number branch
+        * and returns the time which is used as the id in firestore */
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String time = Long.toString(System.currentTimeMillis());
         db.collection(phoneNumber).document(time).set(scores)
@@ -67,6 +72,6 @@ public class ScoreMaintainer {
                         System.out.println("Failed to upload the data to database");
                     }
                 });
-
+        return time;
     }
 }

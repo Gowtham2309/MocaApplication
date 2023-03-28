@@ -25,6 +25,11 @@ public class gaming extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gaming);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Visuospatial");
+        } catch (NullPointerException ignored) {}
+
         button1=findViewById(R.id.button26);
         button2=findViewById(R.id.button27);
         button3=findViewById(R.id.button28);

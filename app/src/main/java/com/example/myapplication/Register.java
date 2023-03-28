@@ -25,6 +25,11 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Register");
+        } catch (NullPointerException ignored) {}
+
         buttonn=findViewById(R.id.RegisterButton);
         email=findViewById(R.id.emailtext);
         password=findViewById(R.id.passwordtext);

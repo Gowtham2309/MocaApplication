@@ -41,6 +41,12 @@ public class Attentation_repeatingDigit extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attentation_repeating_digit);
+
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Repeating Digits");
+        } catch (NullPointerException ignored) {}
+
         btnSpeak = findViewById(R.id.imageButton4);
         btnSpeak1 = findViewById(R.id.imageButton5);
         btnPlayOne = findViewById(R.id.button4);

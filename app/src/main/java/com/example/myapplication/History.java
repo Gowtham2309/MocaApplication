@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -24,11 +25,18 @@ import java.util.Map;
 
 public class History extends AppCompatActivity {
     private ListView listView;
+    private TextView txtNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+        txtNoData = findViewById(R.id.historyNoData);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("History");
+        } catch (NullPointerException ignored) {}
+
 
         SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedPrefsName), Context.MODE_PRIVATE);
         String phoneNumber = prefs.getString(getString(R.string.login), "");
@@ -47,6 +55,10 @@ public class History extends AppCompatActivity {
                         Collections.reverse(historyData); // reverse chronological order
                         System.out.println("----------------");
                         System.out.println(historyData);
+
+                        if (historyData.isEmpty()) {
+                            txtNoData.setText("No history data found, try taking the test");
+                        }
 
                         System.out.println("Linking the data to the listview");
                         listView = findViewById(R.id.historyListView);

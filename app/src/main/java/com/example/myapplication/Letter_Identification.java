@@ -36,6 +36,11 @@ public class Letter_Identification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_letter_identification);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Letter identification");
+        } catch (NullPointerException ignored) {}
+
 
         textview2=findViewById(R.id.textView2);
         buttonn=findViewById(R.id.button17);

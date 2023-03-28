@@ -36,6 +36,12 @@ public class Attention extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attention);
+
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Attention");
+        } catch (NullPointerException ignored) {}
+
         Button buttonn;
         textview3=findViewById(R.id.textView);
         btnSpeak=findViewById(R.id.imageButton6);

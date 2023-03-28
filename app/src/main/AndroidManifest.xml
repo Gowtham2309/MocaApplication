@@ -85,6 +85,14 @@
             android:name=".Attentation_repeatingDigit"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ExpandedHistory"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".History"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

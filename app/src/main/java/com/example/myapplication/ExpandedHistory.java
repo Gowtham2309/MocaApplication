@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,10 @@ public class ExpandedHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expanded_history);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("ACT");
+        } catch (NullPointerException ignored) {}
 
         Intent receivedIntent = getIntent();
         String phoneNumber = receivedIntent.getStringExtra(PHONE_NUM);
