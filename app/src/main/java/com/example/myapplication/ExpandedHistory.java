@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class ExpandedHistory extends AppCompatActivity {
 
-    final static String PHONE_NUM = "PHONE_NUMBER", TIMESTAMP = "TIMESTAMP", DISPLAY_CURRENT_SCORE = "DISPLAY_CURRENT_SCORE";
+    final static String PHONE_NUM = "PHONE_NUMBER", TIMESTAMP = "TIMESTAMP";
     ListView listView;
     TextView txtDate, txtTime;
 
@@ -45,7 +45,6 @@ public class ExpandedHistory extends AppCompatActivity {
         Intent receivedIntent = getIntent();
         String phoneNumber = receivedIntent.getStringExtra(PHONE_NUM);
         String timestamp = receivedIntent.getStringExtra(TIMESTAMP);
-        boolean displayCurrentScore = receivedIntent.getBooleanExtra(DISPLAY_CURRENT_SCORE, false);
         Date date = new Date(Long.parseLong(timestamp));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -59,25 +58,14 @@ public class ExpandedHistory extends AppCompatActivity {
         listView = findViewById(R.id.expandedHistoryListView);
         Activity activity = this;
 
-        if (displayCurrentScore) {
-
-            ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
-            Map<String, Object> data = new HashMap<>(scoreMaintainer.getAllScores());
-            CustomListAdapter listAdapter = new CustomListAdapter(activity, data);
-            listView.setAdapter(listAdapter);
-
-        } else {
-
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection(phoneNumber).document(timestamp).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    CustomListAdapter listAdapter = new CustomListAdapter(activity, documentSnapshot.getData());
-                    listView.setAdapter(listAdapter);
-                }
-            });
-
-        }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(phoneNumber).document(timestamp).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                CustomListAdapter listAdapter = new CustomListAdapter(activity, documentSnapshot.getData());
+                listView.setAdapter(listAdapter);
+            }
+        });
 
     }
 }

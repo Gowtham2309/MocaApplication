@@ -2,11 +2,15 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +26,7 @@ public class Orientation extends AppCompatActivity
 
     String str = ft.format(new Date());
     String[] curr_date=str.split("-");
+    Button btnFinish;
     int Score=0,count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class Orientation extends AppCompatActivity
         } catch (NullPointerException ignored) {}
 
         Spinner spinner_date,spinner_day,spinner_month,spinner_year;
+        btnFinish = findViewById(R.id.buttonFinish);
         String [] Day_arr={"Days","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
         String [] Date_arr={"Date","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
         String [] Month_arr={"Month","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November","December"};
@@ -113,6 +119,23 @@ public class Orientation extends AppCompatActivity
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+        });
+
+        btnFinish.setOnClickListener((View v) -> {
+            // upload the score to the firebase here, as we need to pass the time and phone number
+            // to the final score page - ExpandedHistory
+            SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedPrefsName), Context.MODE_PRIVATE);
+            String phoneNumber = prefs.getString(getString(R.string.login), "");
+
+            ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
+            String timestamp = scoreMaintainer.uploadToFirebase(phoneNumber);
+
+            Intent intent = new Intent(this, ExpandedHistory.class);
+            intent.putExtra(ExpandedHistory.TIMESTAMP, timestamp);
+            intent.putExtra(ExpandedHistory.PHONE_NUM, phoneNumber);
+
+            startActivity(intent);
+            finish(); // removes the page from the stack thus back wont work to go back to this page
         });
     }
 }
