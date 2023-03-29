@@ -31,7 +31,12 @@ public class Attention extends AppCompatActivity {
     TextView textview3;
     protected static final int RESULT_SPEECH=1;
     public ImageButton btnSpeak;
-
+    private int count=0;
+    private double Score=0;
+    ArrayList<String> text;
+    String [] str_arr;
+    final static String TEST_NAME="FLUENCY";
+    char c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +67,7 @@ public class Attention extends AppCompatActivity {
             }
         });
         Random rnd = new Random();
-        char c = (char) ('a' + rnd.nextInt(26));
+        c = (char) ('a' + rnd.nextInt(26));
         textview3.setText("Name maximum number of words that begins with "+c);
         buttonn=findViewById(R.id.button12);
         JsonArrayRequest jsonArrayRequest;
@@ -71,7 +76,17 @@ public class Attention extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Attention.this, Abstraction.class);
                 startActivity(intent);
-                evalvate();
+                for(String s:str_arr)
+                {
+                    System.out.println(s);
+                    if(s.charAt(0)==c)
+                    {
+                        evalvate(s);
+                    }
+                }
+                ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
+                scoreMaintainer.updateScore(TEST_NAME,count>11?1:0);
+                System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
 //                String URL="https://api.dictionaryapi.dev/api/v2/entries/en/="+"Venom";
 //                JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
 //                    @Override
@@ -107,7 +122,8 @@ public class Attention extends AppCompatActivity {
             case RESULT_SPEECH:
                 if (resultCode == RESULT_OK && data != null) {
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
+                    String str=text.get(0);
+                    str_arr=str.split(" ");
 
 
                 }
@@ -116,36 +132,40 @@ public class Attention extends AppCompatActivity {
         }
     }
 
-    public void evalvate()
-    {
+    public void evalvate(String str) {
 
-        String URL="https://api.dictionaryapi.dev/api/v2/entries/en/"+"venom";
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
+        String URL = "https://api.dictionaryapi.dev/api/v2/entries/en/" + str;
+        System.out.println(str);
+        System.out.println(URL);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 try {
                     System.out.println("_____________________1________________________________________");
-                    JSONObject jsonObject=response.getJSONObject(0);
-                    String word=jsonObject.getString("word");
-                   // String origin=jsonObject.getString("origin");
+                    JSONObject jsonObject = response.getJSONObject(0);
+                    String word = jsonObject.getString("word");
+                    // String origin=jsonObject.getString("origin");
                     System.out.println("______________________2_______________________________________");
                     System.out.println(word);
+                    count++;
+                    System.out.println(count);
+
                     //System.out.println(origin);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     System.out.println("_____________________________________________________________");
                     System.out.println(e);
+                    System.out.println("________________________________________________________________________");
+
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                System.out.println("________________________________________________________________________");
 
             }
         });
         MySingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);
     }
-
 }
