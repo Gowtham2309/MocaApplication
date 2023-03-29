@@ -21,6 +21,7 @@ public class Register extends AppCompatActivity {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     EditText email,password, age, ph,name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

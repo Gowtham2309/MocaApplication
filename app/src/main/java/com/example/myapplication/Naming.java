@@ -26,6 +26,8 @@ public class Naming extends AppCompatActivity {
     ArrayList<Integer> sets=new ArrayList<>();
     int min=1,max=10,rand=0;
     EditText name1,name2,name3;
+    private int count=0;
+    final static String TEST_NAME="NAMING";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,17 +78,29 @@ public class Naming extends AppCompatActivity {
         img2.setImageResource(map.get(sets.get(1)));
         img3.setImageResource(map.get(sets.get(2)));
 
-        String ans1=name1.getText().toString();
-        String ans2=name2.getText().toString();
-        String ans3=name3.getText().toString();
+//        String ans1=name1.getText().toString();
+//        String ans2=name2.getText().toString();
+//        String ans3=name3.getText().toString();
 
         buttonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                System.out.println(ans1);
-                System.out.println(ans2);
-                System.out.println(ans3);
+                String ans1=name2.getText().toString();
+                String ans2=name1.getText().toString();
+                String ans3=name3.getText().toString();
+                ans1.toLowerCase();
+                ans2.toLowerCase();
+                ans3.toLowerCase();
+                if(ans1.equals(names.get(sets.get(0)-1))) count++;
+                if(ans2.equals(names.get(sets.get(1)-1))) count++;
+                if(ans3.equals(names.get(sets.get(2)-1))) count++;
+                System.out.println(ans1+" "+sets.get(0));
+                System.out.println(ans2+" "+sets.get(1));
+                System.out.println(ans3+" "+sets.get(2));
+                System.out.println(count);
+                ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
+                scoreMaintainer.updateScore(TEST_NAME, count);
+                System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
                 Intent intent = new Intent(Naming.this, Attentation_repeatingDigit.class);
                 startActivity(intent);
             }
