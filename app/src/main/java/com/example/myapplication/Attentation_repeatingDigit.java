@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Attentation_repeatingDigit extends AppCompatActivity
@@ -33,8 +34,12 @@ public class Attentation_repeatingDigit extends AppCompatActivity
     protected static final int RESULT_SPEECH = 1, RESULT_SPEECH1 = 2;
     public ImageButton btnSpeak, btnSpeak1;
     Button buttonn, btnPlayOne, btnPlayTwo;
+    String arr1[],arr2[];
+    int countf=0,countb=0;
+    int Scoref=0,Scoreb=0;
     ArrayList<Integer> fwd=new ArrayList<>();
     ArrayList<Integer> rev=new ArrayList<>();
+    final static String TEST_NAME="REPEATING DIGIT";
     //TextView tv1;
     //TextView tv2;
     @Override
@@ -106,6 +111,42 @@ public class Attentation_repeatingDigit extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new Intent(Attentation_repeatingDigit.this, Letter_Identification.class);
                 startActivity(intent);
+
+                //forward score calculation
+                int i=0,j=0;
+                while(i < arr1.length && i < fwd.size())
+                {
+                    Integer inti=0;
+                    if(arr1[i]!=" ") inti=Integer.parseInt(arr1[i]);
+                    else continue;
+                    if(inti.equals(fwd.get(i)+1)) countf++;
+                    System.out.println(arr1[i]+" "+fwd.get(i));
+                    i++;
+                }
+                System.out.println(countf);
+                Collections.reverse(rev);
+                i=0;
+                System.out.println(rev);
+                System.out.println(arr2);
+                while(i < arr2.length && i < rev.size())
+                {
+                    Integer inti=0;
+                    if(arr2[i]!=" ") {
+                        inti=Integer.parseInt(arr2[i]);
+                    }
+                    else continue;
+                    if(inti.equals(rev.get(i)+1)) countb++;
+                    System.out.println(arr2[i]+" "+rev.get(i));
+                    i++;
+                }
+//                for(int j=arr2.length,i=0;j>=0,i<)
+                System.out.println(countb);
+                if(countf>=4) Scoref=1;
+                if(countb>=2) Scoreb=1;
+                ScoreMaintainer scoreMaintainer=ScoreMaintainer.getInstance();
+                scoreMaintainer.updateScore(TEST_NAME,(Scoref+Scoreb));
+                System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
+
             }
         });
 
@@ -120,13 +161,19 @@ public class Attentation_repeatingDigit extends AppCompatActivity
             case RESULT_SPEECH:
                 if (resultCode == RESULT_OK && data != null) {
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
+                    System.out.println(text);
+                    String s= text.get(0);
+                    arr1=s.split("");
 
                 }
                 break;
             case RESULT_SPEECH1:
                 if (resultCode == RESULT_OK && data != null) {
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    System.out.println(text);
+                    String s= text.get(0);
+                    arr2=s.split("");
+
                 }
                 break;
         }

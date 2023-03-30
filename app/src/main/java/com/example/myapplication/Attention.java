@@ -76,16 +76,16 @@ public class Attention extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Attention.this, Abstraction.class);
                 startActivity(intent);
-                for(String s:str_arr)
+                for(int i=0;i<str_arr.length;i++)
                 {
-                    System.out.println(s);
-                    if(s.charAt(0)==c)
+                    System.out.println(str_arr[i]);
+                    if(str_arr[i].charAt(0)==c)
                     {
-                        evalvate(s);
+                        evalvate(str_arr[i]);
                     }
                 }
                 ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
-                scoreMaintainer.updateScore(TEST_NAME,count>11?1:0);
+                scoreMaintainer.updateScore(TEST_NAME,count>=11?1:0);
                 System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
 //                String URL="https://api.dictionaryapi.dev/api/v2/entries/en/="+"Venom";
 //                JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
