@@ -35,6 +35,7 @@ public class Attention extends AppCompatActivity {
     private double Score=0;
     ArrayList<String> text;
     String [] str_arr;
+    String str_final="";
     final static String TEST_NAME="FLUENCY";
     char c;
     @Override
@@ -44,7 +45,7 @@ public class Attention extends AppCompatActivity {
 
         // setting title in the action bar
         try {
-            getSupportActionBar().setTitle("Attention");
+            getSupportActionBar().setTitle("FLUENCY");
         } catch (NullPointerException ignored) {}
 
         Button buttonn;
@@ -76,6 +77,9 @@ public class Attention extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Attention.this, Abstraction.class);
                 startActivity(intent);
+                str_final.trim();
+                System.out.println(str_final);
+                str_arr=str_final.split(" ");
                 for(int i=0;i<str_arr.length;i++)
                 {
                     System.out.println(str_arr[i]);
@@ -122,8 +126,8 @@ public class Attention extends AppCompatActivity {
             case RESULT_SPEECH:
                 if (resultCode == RESULT_OK && data != null) {
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    String str=text.get(0);
-                    str_arr=str.split(" ");
+                    str_final=str_final+text.get(0)+" ";
+                    //str_arr=str.split(" ");
 
 
                 }

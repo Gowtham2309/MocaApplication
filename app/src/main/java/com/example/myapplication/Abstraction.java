@@ -13,6 +13,9 @@ public class Abstraction extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_abstraction);
+        try {
+            getSupportActionBar().setTitle("Abstraction");
+        } catch (NullPointerException ignored) {}
         buttonn=findViewById(R.id.button37);
         buttonn.setOnClickListener(new View.OnClickListener() {
             @Override
