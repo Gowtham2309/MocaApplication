@@ -22,12 +22,15 @@ public class ScoreMaintainer {
 
     private static ScoreMaintainer object;
     private static HashMap<String, Integer> scores;
+    private static HistoryInstance historyInstance;
 
     // Maintain hashmap for each different page
     // Inside the each activity java class has a string TEST_NAME which identifies it
 
     private ScoreMaintainer() {
         scores = new HashMap<>();
+        historyInstance = new HistoryInstance();
+        historyInstance.setScores(scores);
     }
 
     public static synchronized ScoreMaintainer getInstance() {
@@ -35,6 +38,11 @@ public class ScoreMaintainer {
             object = new ScoreMaintainer();
         }
         return object;
+    }
+
+    public void clear() {
+        scores.clear();
+        historyInstance.clear();
     }
 
     public int getTotalScore() {
@@ -61,18 +69,43 @@ public class ScoreMaintainer {
         return scores;
     }
 
+    public void setPhysicianName(String name) {
+        historyInstance.setPhysicianName(name);
+    }
+    public void setPatientName(String name) {
+        historyInstance.setPatientName(name);
+    }
+    public void setPatientAge(int age) {
+        historyInstance.setPatientAge(age);
+    }
+
     public String uploadToFirebase(String phoneNumber) {
         /* Uploads all the score to the firebase firestore under the History -> phone number branch
         * and returns the time which is used as the id in firestore */
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String time = Long.toString(System.currentTimeMillis());
-        db.collection(phoneNumber).document(time).set(scores)
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("Failed to upload the data to database");
-                    }
-                });
+        historyInstance.setTotalScore(getTotalScore());
+        historyInstance.setTimeStamp(time);
+//        db.collection(phoneNumber).document(time).set(scores)
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        System.out.println("Failed to upload the data to database");
+//                    }
+//                });
+        db.collection("MoCA").document().set(historyInstance)
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    System.out.println("Failed to upload the data to database");
+                }
+            });
         return time;
+    }
+
+    @androidx.annotation.NonNull
+    @Override
+    public String toString() {
+        return historyInstance.toString();
     }
 }

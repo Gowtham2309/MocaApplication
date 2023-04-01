@@ -36,7 +36,7 @@ public class Test extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Test.this, cdt_Drawing.class);
+                Intent intent = new Intent(Test.this, StartPage.class);
                 startActivity(intent);
             }
         });
