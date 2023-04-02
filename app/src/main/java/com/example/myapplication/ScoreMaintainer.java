@@ -10,11 +10,14 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /*  ScoreMaintainer is a singleton class
     This class object is used to maintains the score over the entire application */
@@ -23,6 +26,7 @@ public class ScoreMaintainer {
     private static ScoreMaintainer object;
     private static HashMap<String, Integer> scores;
     private static HistoryInstance historyInstance;
+    private static long startTimestamp;
 
     // Maintain hashmap for each different page
     // Inside the each activity java class has a string TEST_NAME which identifies it
@@ -38,6 +42,17 @@ public class ScoreMaintainer {
             object = new ScoreMaintainer();
         }
         return object;
+    }
+
+    public void recordStartTime() {
+        startTimestamp = System.currentTimeMillis();
+    }
+
+    public void recordEndTime() {
+        Date currentDate = new Date(System.currentTimeMillis());
+        Date startDate = new Date(startTimestamp);
+        long diff = currentDate.getTime() - startDate.getTime();
+        historyInstance.setDurationMin(TimeUnit.MILLISECONDS.toMinutes(diff));
     }
 
     public void clear() {
@@ -86,6 +101,7 @@ public class ScoreMaintainer {
         String time = Long.toString(System.currentTimeMillis());
         historyInstance.setTotalScore(getTotalScore());
         historyInstance.setTimeStamp(time);
+        historyInstance.setPhoneNumber(phoneNumber);
 //        db.collection(phoneNumber).document(time).set(scores)
 //                .addOnFailureListener(new OnFailureListener() {
 //                    @Override
@@ -93,14 +109,15 @@ public class ScoreMaintainer {
 //                        System.out.println("Failed to upload the data to database");
 //                    }
 //                });
-        db.collection("MoCA").document().set(historyInstance)
+        DocumentReference ref = db.collection("MoCA").document();
+        ref.set(historyInstance)
             .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     System.out.println("Failed to upload the data to database");
                 }
             });
-        return time;
+        return ref.getId();
     }
 
     @androidx.annotation.NonNull

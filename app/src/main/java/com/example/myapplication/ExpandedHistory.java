@@ -29,9 +29,9 @@ import java.util.Map;
 
 public class ExpandedHistory extends AppCompatActivity {
 
-    final static String PHONE_NUM = "PHONE_NUMBER", TIMESTAMP = "TIMESTAMP";
+    final static String PHONE_NUM = "PHONE_NUMBER", DOCUMENT_ID = "DOCUMENT ID";
     ListView listView;
-    TextView txtDate, txtTime;
+    TextView txtDate, txtTime, txtPhysician, txtPatient, txtDuration, txtAge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,41 +44,57 @@ public class ExpandedHistory extends AppCompatActivity {
 
         Intent receivedIntent = getIntent();
         String phoneNumber = receivedIntent.getStringExtra(PHONE_NUM);
-        String timestamp = receivedIntent.getStringExtra(TIMESTAMP);
-        Date date = new Date(Long.parseLong(timestamp));
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        String docId = receivedIntent.getStringExtra(DOCUMENT_ID);
 
         txtDate = findViewById(R.id.expandedHistoryDate);
         txtTime = findViewById(R.id.expandedHistoryTime);
-        txtDate.setText(dateFormat.format(date));
-        txtTime.setText(timeFormat.format(date));
+        txtPhysician = findViewById(R.id.expandedHistoryPhysician);
+        txtPatient = findViewById(R.id.expandedHistoryPatient);
+        txtAge = findViewById(R.id.expandedHistoryAge);
+        txtDuration = findViewById(R.id.expandedHistoryDuration);
 
         listView = findViewById(R.id.expandedHistoryListView);
         Activity activity = this;
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(phoneNumber).document(timestamp).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("MoCA").document(docId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                CustomListAdapter listAdapter = new CustomListAdapter(activity, documentSnapshot.getData());
+                HistoryInstance instance = documentSnapshot.toObject(HistoryInstance.class);
+                System.out.println(instance);
+                setData(instance);
+                CustomListAdapter listAdapter = new CustomListAdapter(activity, instance);
                 listView.setAdapter(listAdapter);
             }
         });
 
     }
+
+    public void setData(HistoryInstance instance) {
+        String timestamp = instance.getTimeStamp();
+        Date date = new Date(Long.parseLong(timestamp));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        txtDate.setText(dateFormat.format(date));
+        txtTime.setText(timeFormat.format(date));
+
+        txtPhysician.setText(instance.getPhysicianName());
+        txtPatient.setText(instance.getPatientName());
+
+        txtDuration.setText(String.format("%s min", instance.getDurationMin()));
+        txtAge.setText(Integer.toString(instance.getPatientAge()));
+    }
 }
 
-class CustomListAdapter extends ArrayAdapter<Map<String, Object>> {
-    Map<String, Object> data;
+class CustomListAdapter extends ArrayAdapter<HistoryInstance> {
+    HistoryInstance data;
     List<String> keyList;
     List<Object> valueList;
     Activity context;
 
     @Override
     public int getCount() {
-        return data.size();
+        return data.getScores().size();
     }
 
     @NonNull
@@ -95,12 +111,12 @@ class CustomListAdapter extends ArrayAdapter<Map<String, Object>> {
         return rowView;
     }
 
-    public CustomListAdapter(@NonNull Activity context, Map<String, Object> data) {
+    public CustomListAdapter(@NonNull Activity context, HistoryInstance data) {
         super(context, R.layout.expanded_history_list_view);
         this.context = context;
         this.data = data;
         System.out.println(data);
-        this.keyList = new ArrayList<>(data.keySet());
-        this.valueList = new ArrayList<>(data.values());
+        this.keyList = new ArrayList<>(data.getScores().keySet());
+        this.valueList = new ArrayList<>(data.getScores().values());
     }
 }

@@ -9,13 +9,6 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date"
-        android:layout_marginEnd="10dp"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="wrap_content"
         style="@style/contentText"
         android:layout_height="wrap_content"
         android:id="@+id/historyDate"
@@ -29,19 +22,11 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time"
-        android:layout_marginEnd="10dp"
-        android:textStyle="bold"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
         style="@style/contentText"
         android:layout_height="wrap_content"
-        android:id="@+id/historyTime"
+        android:id="@+id/historyPhysician"
         android:layout_marginEnd="10dp"
-        android:text="10:10:10"/>
+        android:text="Physician"/>
 
     <Space
         android:layout_width="0dp"
@@ -50,10 +35,17 @@
 
     <TextView
         android:layout_width="wrap_content"
+        style="@style/contentText"
         android:layout_height="wrap_content"
-        android:text="Score"
+        android:id="@+id/historyPatient"
         android:layout_marginEnd="10dp"
-        android:textStyle="bold"/>
+        android:text="Patient"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
 
     <TextView
         android:layout_width="wrap_content"

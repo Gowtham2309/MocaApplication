@@ -44,6 +44,7 @@ public class StartPage extends AppCompatActivity {
             scoreMaintainer.setPhysicianName(editPhysicianName.getText().toString());
             scoreMaintainer.setPatientName(editPatientName.getText().toString());
             scoreMaintainer.setPatientAge(Integer.parseInt(editPatientAge.getText().toString()));
+            scoreMaintainer.recordStartTime();
             System.out.println(scoreMaintainer);
 
             Intent intent = new Intent(this, cdt_Drawing.class);
