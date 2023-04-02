@@ -14,6 +14,16 @@
         style="@style/pageTitle"
         android:gravity="center"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/delete_btn_background"
+        android:layout_gravity="end"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/red"
+        android:id="@+id/expandedHistoryDelete"
+        android:text="Delete" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -130,6 +140,19 @@
             android:text="10:10"/>
 
     </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:dividerColor="@color/davysGray"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scores"
+        style="@style/contentText"
+        android:gravity="center"
+        android:layout_margin="10dp" />
 
     <ListView
         android:layout_width="match_parent"

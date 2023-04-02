@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //import androidx.annotation.NonNull;
 //import androidx.annotation.Nullable;
@@ -32,6 +34,7 @@ public class ExpandedHistory extends AppCompatActivity {
     final static String PHONE_NUM = "PHONE_NUMBER", DOCUMENT_ID = "DOCUMENT ID";
     ListView listView;
     TextView txtDate, txtTime, txtPhysician, txtPatient, txtDuration, txtAge;
+    Button btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class ExpandedHistory extends AppCompatActivity {
         txtPatient = findViewById(R.id.expandedHistoryPatient);
         txtAge = findViewById(R.id.expandedHistoryAge);
         txtDuration = findViewById(R.id.expandedHistoryDuration);
+        btnDelete = findViewById(R.id.expandedHistoryDelete);
 
         listView = findViewById(R.id.expandedHistoryListView);
         Activity activity = this;
@@ -66,6 +70,16 @@ public class ExpandedHistory extends AppCompatActivity {
                 CustomListAdapter listAdapter = new CustomListAdapter(activity, instance);
                 listView.setAdapter(listAdapter);
             }
+        });
+
+        btnDelete.setOnClickListener((View v) -> {
+            db.collection("MoCA").document(docId).delete()
+                    .addOnFailureListener(unused -> {
+                        Toast.makeText(getApplicationContext(), "Failed to delete the instance", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnSuccessListener(unused -> {
+                        onBackPressed();
+                    });
         });
 
     }

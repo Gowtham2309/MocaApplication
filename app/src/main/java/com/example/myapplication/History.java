@@ -37,45 +37,23 @@ public class History extends AppCompatActivity {
             getSupportActionBar().setTitle("History");
         } catch (NullPointerException ignored) {}
 
+        load();
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        load();
+    }
+
+    private void load() {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedPrefsName), Context.MODE_PRIVATE);
         String phoneNumber = prefs.getString(getString(R.string.login), "");
 
         ArrayList<HistoryListData> historyData = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Activity activity = this;
-//        db.collection(phoneNumber).get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        for(DocumentSnapshot snapshot: queryDocumentSnapshots.getDocuments()) {
-//                            Map<String, Object> data = snapshot.getData();
-//                            historyData.add(new HistoryListData(snapshot.getId(), data));
-//                        }
-//                        Collections.reverse(historyData); // reverse chronological order
-//                        System.out.println("----------------");
-//                        System.out.println(historyData);
-//
-//                        if (historyData.isEmpty()) {
-//                            txtNoData.setText("No history data found, try taking the test");
-//                        }
-//
-//                        System.out.println("Linking the data to the listview");
-//                        listView = findViewById(R.id.historyListView);
-//                        HistoryListAdapter listAdapter = new HistoryListAdapter(activity, historyData);
-//                        listView.setAdapter(listAdapter);
-//
-//                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                                Intent intent = new Intent(activity, ExpandedHistory.class);
-//                                intent.putExtra(ExpandedHistory.PHONE_NUM, phoneNumber);
-//                                intent.putExtra(ExpandedHistory.TIMESTAMP, historyData.get(position).timestamp);
-//                                startActivity(intent);
-//                            }
-//                        });
-//                    }
-//                });
+
         // Changing the firebase backend
         db.collection("MoCA").whereEqualTo("phoneNumber", phoneNumber).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
