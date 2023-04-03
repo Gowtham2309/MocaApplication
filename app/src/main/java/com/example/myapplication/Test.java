@@ -29,6 +29,7 @@ public class Test extends AppCompatActivity {
 
         Button btn=findViewById(R.id.button40);
         Button btnToHistory = findViewById(R.id.buttonToHistory);
+        Button btnToAnalytics = findViewById(R.id.buttonToAnalytics);
 
         Intent intent_txt=getIntent();
         String str=intent_txt.getStringExtra("Message_Key");
@@ -43,6 +44,11 @@ public class Test extends AppCompatActivity {
 
         btnToHistory.setOnClickListener((View view) -> {
             Intent intent = new Intent(Test.this, History.class);
+            startActivity(intent);
+        });
+
+        btnToAnalytics.setOnClickListener((View view) -> {
+            Intent intent = new Intent(Test.this, AnalyticsPage.class);
             startActivity(intent);
         });
     }

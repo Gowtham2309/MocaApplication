@@ -9,6 +9,9 @@
 
     <application android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".AnalyticsPage"
+            android:exported="false" />
+        <activity
             android:name=".StartPage"
             android:exported="false" />
         <activity
