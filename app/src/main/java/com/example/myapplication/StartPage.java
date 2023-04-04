@@ -24,6 +24,10 @@ public class StartPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Start page");
+        } catch (NullPointerException ignored) {}
 
         editPhysicianName = findViewById(R.id.editTextPhysicianName);
         editPatientName = findViewById(R.id.editTextPatientName);
