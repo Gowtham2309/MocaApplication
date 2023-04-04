@@ -147,6 +147,7 @@ public class Attentation_repeatingDigit extends AppCompatActivity
                 scoreMaintainer.updateScore(TEST_NAME,(Scoref+Scoreb));
                 System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
 
+                finish();
             }
         });
 

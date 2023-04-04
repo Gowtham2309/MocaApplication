@@ -112,7 +112,7 @@ public class Attention extends AppCompatActivity {
 //
 //                    }
 //               });
-
+                finish();
             }
         });
 

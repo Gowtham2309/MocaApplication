@@ -98,6 +98,7 @@ public class gaming extends AppCompatActivity {
 
                 Intent intent = new Intent(gaming.this, Naming.class);
                 startActivity(intent);
+                finish();
             }
         });
 

@@ -76,6 +76,7 @@ public class Letter_Identification extends AppCompatActivity {
                 Intent intent = new Intent(Letter_Identification.this, SubtractionMain.class);
                 startActivity(intent);
                 System.out.println(button_click_time);
+                finish();
             }
         });
 

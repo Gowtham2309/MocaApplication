@@ -139,7 +139,7 @@ public class cdt_Drawing extends AppCompatActivity {
         }
         Intent intent=new Intent(cdt_Drawing.this,gaming.class);
         startActivity(intent);
-
+        finish();
     }
 
 }
