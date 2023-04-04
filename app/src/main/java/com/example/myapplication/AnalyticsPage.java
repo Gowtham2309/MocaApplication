@@ -41,17 +41,18 @@ import java.util.Set;
 
 public class AnalyticsPage extends AppCompatActivity {
     LineChart lineChart;
-    FlexboxLayout flexButtonGroup;
+    LinearLayout flexButtonGroup;
     Context context;
 
     // TODO: add the remaining test names
     String[] testNames = new String[]{
+            "totalScore",
             //cdt_Drawing.TEST_NAME,
             gaming.TEST_NAME,
             Attention.TEST_NAME,
             Letter_Identification.TEST_NAME,
             Naming.TEST_NAME,
-            SubtractionMain.TEST_NAME
+            SubtractionMain.TEST_NAME,
     };
 
     int[] colors = new int[]{
@@ -66,15 +67,20 @@ public class AnalyticsPage extends AppCompatActivity {
     Set<String> visibleTests = new HashSet<>();
     List<HistoryInstance> historyInstances;
     List<Button> btnList;
-    TextView txtLoading;
+    TextView txtLoading, txtHighestScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics_page);
+        // setting title in the action bar
+        try {
+            getSupportActionBar().setTitle("Analytics");
+        } catch (NullPointerException ignored) {}
 
         lineChart = findViewById(R.id.lineChart);
-        flexButtonGroup = findViewById(R.id.flexButtonGroup);
+        flexButtonGroup = findViewById(R.id.horizontalButtonBar);
+        txtHighestScore = findViewById(R.id.analyticsHighestScore);
         context = this;
         btnList = new ArrayList<>();
 
@@ -94,6 +100,7 @@ public class AnalyticsPage extends AppCompatActivity {
         colorMap.put(Letter_Identification.TEST_NAME, R.color.purple_500);
         colorMap.put(Naming.TEST_NAME, R.color.jetStream);
         colorMap.put(SubtractionMain.TEST_NAME, R.color.teal_200);
+        colorMap.put("totalScore", R.color.green);
     }
 
     private void setToLoading() {
@@ -106,6 +113,14 @@ public class AnalyticsPage extends AppCompatActivity {
     private void removeLoading() {
         txtLoading.setVisibility(View.INVISIBLE);
         flexButtonGroup.removeView(txtLoading);
+    }
+
+    private void setHighestScore() {
+        int highestScore = 0;
+        for(HistoryInstance instance: historyInstances) {
+            highestScore = Math.max( highestScore, instance.getTotalScore() );
+        }
+        txtHighestScore.setText(Integer.toString(highestScore));
     }
 
     private void populateHistoryInstances() {
@@ -128,6 +143,7 @@ public class AnalyticsPage extends AppCompatActivity {
 
                     // now enable all the buttons
                     populateFlexButtonGroup(context);
+                    setHighestScore();
                 }).addOnFailureListener(unused -> {
                     Toast.makeText(getApplicationContext(), "Error loading data", Toast.LENGTH_SHORT).show();
                 });
@@ -143,6 +159,7 @@ public class AnalyticsPage extends AppCompatActivity {
 
         for(HistoryInstance instance: historyInstances) {
             Map<String, Integer> scores = instance.getScores();
+            scores.put("totalScore", instance.getTotalScore());
             timeStamps.add(instance.getTimeStamp());
             for(String test: visibleTests) {
                 int score;
@@ -176,7 +193,7 @@ public class AnalyticsPage extends AppCompatActivity {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
                 Date date = new Date(Long.parseLong(timeStamps.get((int) value)));
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
                 return dateFormat.format(date);
             }
         };
