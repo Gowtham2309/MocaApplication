@@ -14,16 +14,6 @@
         style="@style/pageTitle"
         android:gravity="center"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/delete_btn_background"
-        android:layout_gravity="end"
-        android:layout_marginEnd="20dp"
-        android:textColor="@color/red"
-        android:id="@+id/expandedHistoryDelete"
-        android:text="Delete" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

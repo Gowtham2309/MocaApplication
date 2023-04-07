@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -34,7 +37,7 @@ public class ExpandedHistory extends AppCompatActivity {
     final static String PHONE_NUM = "PHONE_NUMBER", DOCUMENT_ID = "DOCUMENT ID";
     ListView listView;
     TextView txtDate, txtTime, txtPhysician, txtPatient, txtDuration, txtAge, txtUserFeedback;
-    Button btnDelete;
+    String docId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class ExpandedHistory extends AppCompatActivity {
 
         Intent receivedIntent = getIntent();
         String phoneNumber = receivedIntent.getStringExtra(PHONE_NUM);
-        String docId = receivedIntent.getStringExtra(DOCUMENT_ID);
+        docId = receivedIntent.getStringExtra(DOCUMENT_ID);
 
         txtDate = findViewById(R.id.expandedHistoryDate);
         txtTime = findViewById(R.id.expandedHistoryTime);
@@ -55,7 +58,6 @@ public class ExpandedHistory extends AppCompatActivity {
         txtPatient = findViewById(R.id.expandedHistoryPatient);
         txtAge = findViewById(R.id.expandedHistoryAge);
         txtDuration = findViewById(R.id.expandedHistoryDuration);
-        btnDelete = findViewById(R.id.expandedHistoryDelete);
         txtUserFeedback = findViewById(R.id.expandedHistoryUserFeedback);
 
         listView = findViewById(R.id.expandedHistoryListView);
@@ -73,16 +75,17 @@ public class ExpandedHistory extends AppCompatActivity {
             }
         });
 
-        btnDelete.setOnClickListener((View v) -> {
-            db.collection("MoCA").document(docId).delete()
-                    .addOnFailureListener(unused -> {
-                        Toast.makeText(getApplicationContext(), "Failed to delete the instance", Toast.LENGTH_SHORT).show();
-                    })
-                    .addOnSuccessListener(unused -> {
-                        onBackPressed();
-                    });
-        });
+    }
 
+    private void deleteDoc(String docId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("MoCA").document(docId).delete()
+                .addOnFailureListener(unused -> {
+                    Toast.makeText(getApplicationContext(), "Failed to delete the instance", Toast.LENGTH_SHORT).show();
+                })
+                .addOnSuccessListener(unused -> {
+                    onBackPressed();
+                });
     }
 
     private void setUserFeedback(int totalScore, boolean display) {
@@ -123,6 +126,22 @@ public class ExpandedHistory extends AppCompatActivity {
 
         // only the orientation page sends the phoneNumber
         setUserFeedback(instance.getTotalScore(), phoneNumber != null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.expanded_history_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menuDelete) {
+            deleteDoc(docId);
+            return true;
+        }
+        return false;
     }
 }
 

@@ -81,7 +81,6 @@ public class History extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                                 Intent intent = new Intent(activity, ExpandedHistory.class);
-                                intent.putExtra(ExpandedHistory.PHONE_NUM, phoneNumber);
                                 intent.putExtra(ExpandedHistory.DOCUMENT_ID, historyData.get(position).id);
                                 startActivity(intent);
                             }
