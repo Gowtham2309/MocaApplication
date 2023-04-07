@@ -33,7 +33,7 @@ public class ExpandedHistory extends AppCompatActivity {
 
     final static String PHONE_NUM = "PHONE_NUMBER", DOCUMENT_ID = "DOCUMENT ID";
     ListView listView;
-    TextView txtDate, txtTime, txtPhysician, txtPatient, txtDuration, txtAge;
+    TextView txtDate, txtTime, txtPhysician, txtPatient, txtDuration, txtAge, txtUserFeedback;
     Button btnDelete;
 
     @Override
@@ -56,6 +56,7 @@ public class ExpandedHistory extends AppCompatActivity {
         txtAge = findViewById(R.id.expandedHistoryAge);
         txtDuration = findViewById(R.id.expandedHistoryDuration);
         btnDelete = findViewById(R.id.expandedHistoryDelete);
+        txtUserFeedback = findViewById(R.id.expandedHistoryUserFeedback);
 
         listView = findViewById(R.id.expandedHistoryListView);
         Activity activity = this;
@@ -66,7 +67,7 @@ public class ExpandedHistory extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 HistoryInstance instance = documentSnapshot.toObject(HistoryInstance.class);
                 System.out.println(instance);
-                setData(instance);
+                setData(instance, phoneNumber);
                 CustomListAdapter listAdapter = new CustomListAdapter(activity, instance);
                 listView.setAdapter(listAdapter);
             }
@@ -84,7 +85,29 @@ public class ExpandedHistory extends AppCompatActivity {
 
     }
 
-    public void setData(HistoryInstance instance) {
+    private void setUserFeedback(int totalScore, boolean display) {
+        /*Evaluate the final score and tell user feedback regarding cognitive abilities*/
+        if (!display) {
+            // don't display the feedback
+            txtUserFeedback.setVisibility(View.GONE);
+            return;
+        }
+
+        String msg = "";
+        int color;
+        if (totalScore < 26) {
+            // need to take elaborate cognitive tests
+            msg = "Score is low! Please consult a physician";
+            color = R.color.red;
+        } else {
+            msg = "Nice score! Cognitive functions are fine";
+            color = R.color.green;
+        }
+        txtUserFeedback.setText(msg);
+        txtUserFeedback.setTextColor(getResources().getColor(color));
+    }
+
+    public void setData(HistoryInstance instance, String phoneNumber) {
         String timestamp = instance.getTimeStamp();
         Date date = new Date(Long.parseLong(timestamp));
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -97,6 +120,9 @@ public class ExpandedHistory extends AppCompatActivity {
 
         txtDuration.setText(String.format("%s min", instance.getDurationMin()));
         txtAge.setText(Integer.toString(instance.getPatientAge()));
+
+        // only the orientation page sends the phoneNumber
+        setUserFeedback(instance.getTotalScore(), phoneNumber != null);
     }
 }
 

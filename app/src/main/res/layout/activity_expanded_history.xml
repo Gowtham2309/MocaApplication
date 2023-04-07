@@ -24,6 +24,15 @@
         android:id="@+id/expandedHistoryDelete"
         android:text="Delete" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expandedHistoryUserFeedback"
+        android:gravity="center"
+        style="@style/contentText"
+        android:layout_margin="5dp"
+        android:text="Loading ..."/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
