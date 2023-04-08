@@ -30,6 +30,10 @@ public class Orientation extends AppCompatActivity
     int Score=0,count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        try {
+            getSupportActionBar().setTitle("ORIENTATION");
+        } catch (NullPointerException ignored) {}
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orientation);
         // setting title in the action bar

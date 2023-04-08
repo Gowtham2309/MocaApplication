@@ -31,8 +31,8 @@ public class Attention extends AppCompatActivity {
     TextView textview3;
     protected static final int RESULT_SPEECH=1;
     public ImageButton btnSpeak;
-    private int count=0;
-    private double Score=0;
+    int count=0;
+    int Score=0;
     ArrayList<String> text;
     String [] str_arr;
     String str_final="";
@@ -88,8 +88,9 @@ public class Attention extends AppCompatActivity {
                         evalvate(str_arr[i]);
                     }
                 }
+                if(count>=11) Score=1;
                 ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
-                scoreMaintainer.updateScore(TEST_NAME,count>=11?1:0);
+                scoreMaintainer.updateScore(TEST_NAME,Score);
                 System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
 //                String URL="https://api.dictionaryapi.dev/api/v2/entries/en/="+"Venom";
 //                JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
