@@ -103,6 +103,7 @@ public class Naming extends AppCompatActivity {
                 System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
                 Intent intent = new Intent(Naming.this, Memory_Delayedrecall.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

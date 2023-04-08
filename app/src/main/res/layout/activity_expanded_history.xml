@@ -14,6 +14,93 @@
         style="@style/pageTitle"
         android:gravity="center"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expandedHistoryUserFeedback"
+        android:gravity="center"
+        style="@style/contentText"
+        android:layout_margin="5dp"
+        android:text="Loading ..."/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Physician : "
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/contentText"
+            android:id="@+id/expandedHistoryPhysician"
+            android:text="Physician"/>
+
+        <Space
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient : "
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/contentText"
+            android:id="@+id/expandedHistoryPatient"
+            android:text="Patient"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient age : "
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/contentText"
+            android:id="@+id/expandedHistoryAge"
+            android:text="10"/>
+
+        <Space
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duration : "
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/contentText"
+            android:id="@+id/expandedHistoryDuration"
+            android:text="10 Min"/>
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,6 +139,19 @@
             android:text="10:10"/>
 
     </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:dividerColor="@color/davysGray"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scores"
+        style="@style/contentText"
+        android:gravity="center"
+        android:layout_margin="10dp" />
 
     <ListView
         android:layout_width="match_parent"

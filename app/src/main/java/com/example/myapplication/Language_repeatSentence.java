@@ -118,6 +118,7 @@ public class Language_repeatSentence extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Language_repeatSentence.this, Attention.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

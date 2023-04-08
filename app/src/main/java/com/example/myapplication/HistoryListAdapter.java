@@ -10,29 +10,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldPath;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
-public class HistoryListAdapter extends ArrayAdapter<HistoryPair> {
+public class HistoryListAdapter extends ArrayAdapter<HistoryListData> {
     final Activity context;
-    private ArrayList<HistoryPair> historyData;
+    private ArrayList<HistoryListData> historyData;
 
-    public HistoryListAdapter(@NonNull Activity context, ArrayList<HistoryPair> data) {
+    public HistoryListAdapter(@NonNull Activity context, ArrayList<HistoryListData> data) {
         super(context, R.layout.history_list_view);
         this.context = context;
         historyData = data;
@@ -43,16 +30,18 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryPair> {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.history_list_view, null, true);
 
-        TextView txtDate, txtTime, txtScore;
+        TextView txtDate, txtPhysician, txtPatient, txtScore;
         txtDate = rowView.findViewById(R.id.historyDate);
-        txtTime = rowView.findViewById(R.id.historyTime);
+        txtPhysician = rowView.findViewById(R.id.historyPhysician);
+        txtPatient = rowView.findViewById(R.id.historyPatient);
         txtScore = rowView.findViewById(R.id.historyScore);
 
         // set the values
-        HistoryPair pair = historyData.get(position);
-        txtDate.setText(pair.getDate());
-        txtTime.setText(pair.getTime());
-        txtScore.setText(pair.getScore());
+        HistoryListData data = historyData.get(position);
+        txtDate.setText(data.getDate());
+        txtScore.setText(data.getScore());
+        txtPhysician.setText(data.getPhysicianName());
+        txtPatient.setText(data.getPatientName());
 
         return rowView;
     }
@@ -63,14 +52,26 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryPair> {
     }
 }
 
-class HistoryPair {
-    String timestamp;
+class HistoryListData {
+    String timestamp, physicianName, patientName, id;
     Date date;
-    Map<String, Object> data;
-    HistoryPair(String timestamp, Map<String, Object> data) {
+    Map<String, Integer> data;
+    HistoryListData(String id, String timestamp, String physicianName, String patientName, Map<String, Integer> data) {
+        this.id = id;
         this.timestamp = timestamp;
         this.data = data;
         this.date = new Date(Long.parseLong(timestamp));
+        this.physicianName = physicianName;
+        this.patientName = patientName;
+    }
+
+    HistoryListData(String id, HistoryInstance instance) {
+        this.id = id;
+        this.timestamp = instance.getTimeStamp();
+        this.data = instance.getScores();
+        this.date = new Date(Long.parseLong(timestamp));
+        this.physicianName = instance.getPhysicianName();
+        this.patientName = instance.getPatientName();
     }
 
     public String getDate() {
@@ -81,17 +82,31 @@ class HistoryPair {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         return sdf.format(this.date);
     }
+
+    public String getPhysicianName() {
+        return physicianName;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
     public String getScore() {
         long totalScore = 0;
-        for(Map.Entry<String, Object> entry: data.entrySet()) {
-            totalScore += (Long) entry.getValue();
+        for(Map.Entry<String, Integer> entry: data.entrySet()) {
+            totalScore += entry.getValue();
         }
         return Long.toString(totalScore);
     }
 
-    @NonNull
     @Override
     public String toString() {
-        return "ts: "+timestamp+" data: "+data;
+        return "HistoryListData{" +
+                "timestamp='" + timestamp + '\'' +
+                ", physicianName='" + physicianName + '\'' +
+                ", patientName='" + patientName + '\'' +
+                ", date=" + date +
+                ", data=" + data +
+                '}';
     }
 }

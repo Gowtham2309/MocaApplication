@@ -98,6 +98,7 @@ public class gaming extends AppCompatActivity {
 
                 Intent intent = new Intent(gaming.this, Naming.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -113,6 +114,7 @@ public class gaming extends AppCompatActivity {
         Button btn = (Button) view;
         ans.add(btn.getText().toString());
         btn.setEnabled(false);
+        btn.setVisibility(View.GONE);
     }
 
     public void showInstruction(View view) {
@@ -147,6 +149,7 @@ public class gaming extends AppCompatActivity {
     public void reset(View view) {
         for (Button btn :
                 copyButtonList) {
+            btn.setVisibility(View.VISIBLE);
             btn.setEnabled(true);
             ans.clear();
         }

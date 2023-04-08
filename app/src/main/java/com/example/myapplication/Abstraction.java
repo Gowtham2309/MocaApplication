@@ -23,6 +23,7 @@ public class Abstraction extends AppCompatActivity {
                 System.out.println(Orientation.class);
                 Intent intent = new Intent(Abstraction.this,Memory_Delayedrecall.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

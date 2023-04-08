@@ -30,7 +30,7 @@ public class Letter_Identification extends AppCompatActivity {
     ArrayList<Long> duration_list=new ArrayList<>();
     ArrayList<Long> button_click_time=new ArrayList<>();
     char charToIdentify;
-    final String TEST_NAME = "LETTER IDENTIFICATION";
+    final static String TEST_NAME = "LETTER IDENTIFICATION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,7 @@ public class Letter_Identification extends AppCompatActivity {
                 Intent intent = new Intent(Letter_Identification.this, SubtractionMain.class);
                 startActivity(intent);
                 System.out.println(button_click_time);
+                finish();
             }
         });
 

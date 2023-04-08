@@ -104,6 +104,7 @@ public class SubtractionMain extends AppCompatActivity {
                 System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
                  Intent intent = new Intent(SubtractionMain.this, Language_repeatSentence.class);
                  startActivity(intent);
+                 finish();
             }
         });
 

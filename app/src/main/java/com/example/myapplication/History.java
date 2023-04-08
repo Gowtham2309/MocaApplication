@@ -37,24 +37,36 @@ public class History extends AppCompatActivity {
             getSupportActionBar().setTitle("History");
         } catch (NullPointerException ignored) {}
 
+        load();
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        load();
+    }
+
+    private void load() {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedPrefsName), Context.MODE_PRIVATE);
         String phoneNumber = prefs.getString(getString(R.string.login), "");
 
-        ArrayList<HistoryPair> historyData = new ArrayList<>();
+        ArrayList<HistoryListData> historyData = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Activity activity = this;
-        db.collection(phoneNumber).get()
+
+        // Changing the firebase backend
+        db.collection("MoCA").whereEqualTo("phoneNumber", phoneNumber).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for(DocumentSnapshot snapshot: queryDocumentSnapshots.getDocuments()) {
-                            Map<String, Object> data = snapshot.getData();
-                            historyData.add(new HistoryPair(snapshot.getId(), data));
+                            HistoryInstance instance = snapshot.toObject(HistoryInstance.class);
+                            System.out.println(instance);
+                            historyData.add(new HistoryListData(
+                                    snapshot.getId(),
+                                    instance
+                            ));
                         }
-                        Collections.reverse(historyData); // reverse chronological order
-                        System.out.println("----------------");
-                        System.out.println(historyData);
 
                         if (historyData.isEmpty()) {
                             txtNoData.setText("No history data found, try taking the test");
@@ -69,8 +81,7 @@ public class History extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                                 Intent intent = new Intent(activity, ExpandedHistory.class);
-                                intent.putExtra(ExpandedHistory.PHONE_NUM, phoneNumber);
-                                intent.putExtra(ExpandedHistory.TIMESTAMP, historyData.get(position).timestamp);
+                                intent.putExtra(ExpandedHistory.DOCUMENT_ID, historyData.get(position).id);
                                 startActivity(intent);
                             }
                         });

@@ -128,11 +128,12 @@ public class Orientation extends AppCompatActivity
             String phoneNumber = prefs.getString(getString(R.string.login), "");
 
             ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
-            String timestamp = scoreMaintainer.uploadToFirebase(phoneNumber);
+            scoreMaintainer.recordEndTime();
+            String id = scoreMaintainer.uploadToFirebase(phoneNumber);
 
             Intent intent = new Intent(this, ExpandedHistory.class);
-            intent.putExtra(ExpandedHistory.TIMESTAMP, timestamp);
             intent.putExtra(ExpandedHistory.PHONE_NUM, phoneNumber);
+            intent.putExtra(ExpandedHistory.DOCUMENT_ID, id);
 
             startActivity(intent);
             finish(); // removes the page from the stack thus back wont work to go back to this page
