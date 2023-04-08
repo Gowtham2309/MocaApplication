@@ -22,6 +22,7 @@ public class ScoreMaintainer {
 
     private static ScoreMaintainer object;
     private static HashMap<String, Integer> scores;
+    public static boolean isFirst=true;
 
     // Maintain hashmap for each different page
     // Inside the each activity java class has a string TEST_NAME which identifies it

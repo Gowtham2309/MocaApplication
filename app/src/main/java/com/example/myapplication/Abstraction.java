@@ -21,7 +21,7 @@ public class Abstraction extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println(Orientation.class);
-                Intent intent = new Intent(Abstraction.this,Orientation.class);
+                Intent intent = new Intent(Abstraction.this,Memory_Delayedrecall.class);
                 startActivity(intent);
             }
         });

@@ -101,7 +101,7 @@ public class Naming extends AppCompatActivity {
                 ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
                 scoreMaintainer.updateScore(TEST_NAME, count);
                 System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
-                Intent intent = new Intent(Naming.this, Attentation_repeatingDigit.class);
+                Intent intent = new Intent(Naming.this, Memory_Delayedrecall.class);
                 startActivity(intent);
             }
         });
