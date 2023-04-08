@@ -25,12 +25,10 @@ public class ScoreMaintainer {
 
     private static ScoreMaintainer object;
     private static HashMap<String, Integer> scores;
-<<<<<<< HEAD
-    public static boolean isFirst=true;
-=======
+    private static boolean isFirstDelayedRecall;
+    private static String delayedRecallString;
     private static HistoryInstance historyInstance;
     private static long startTimestamp;
->>>>>>> 94e2a0d196df7bee0050c2263210bb82c98bc05a
 
     // Maintain hashmap for each different page
     // Inside the each activity java class has a string TEST_NAME which identifies it
@@ -39,6 +37,8 @@ public class ScoreMaintainer {
         scores = new HashMap<>();
         historyInstance = new HistoryInstance();
         historyInstance.setScores(scores);
+        isFirstDelayedRecall = true;
+        delayedRecallString = "";
     }
 
     public static synchronized ScoreMaintainer getInstance() {
@@ -96,6 +96,22 @@ public class ScoreMaintainer {
     }
     public void setPatientAge(int age) {
         historyInstance.setPatientAge(age);
+    }
+
+    public boolean isFirstDelayedRecall() {
+        return isFirstDelayedRecall;
+    }
+
+    public void setFirstDelayedRecall(boolean isFirstDelayedRecall) {
+        ScoreMaintainer.isFirstDelayedRecall = isFirstDelayedRecall;
+    }
+
+    public String getDelayedRecallString() {
+        return delayedRecallString;
+    }
+
+    public void setDelayedRecallString(String string) {
+        delayedRecallString = string;
     }
 
     public String uploadToFirebase(String phoneNumber) {

@@ -20,7 +20,8 @@ import java.util.Random;
 
 public class Memory_Delayedrecall extends AppCompatActivity {
 
-    String arr[]={"please","sorry", "help", "love","friend", "family", "time", "money", "food", "water","face","velvet", "church","daisy", "red","blue", "education"};
+    String arr[]={"please","sorry", "help", "love","friend", "family", "time", "money", "food",
+            "water","face","velvet", "church","daisy", "red","blue", "education"};
     String target_arr[]=new String[5];
     String str_final="";
     String final_arr[];
@@ -30,40 +31,23 @@ public class Memory_Delayedrecall extends AppCompatActivity {
     TextView tv_head,tv_test;
     Button button;
     ImageButton imgclickspeak;
+    ScoreMaintainer scoreMaintainer;
     int count=0,score_memory=0,score_delayed_recall=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory_delayedrecall);
-        Random r=new Random();
+
+        scoreMaintainer = ScoreMaintainer.getInstance();
+
         tv_head=findViewById(R.id.textView16);
         tv_test=findViewById(R.id.textView17);
         button=findViewById(R.id.button);
         imgclickspeak=findViewById(R.id.imageButton);
-        if(ScoreMaintainer.isFirst)
-        {
-            tv_head.setText("Memory");
-            for(int i=0;i<5;i++)
-            {
-                int index = r.nextInt(arr.length-1);
-                if(al.contains(index))
-                {
-                    i--;
-                    continue;
-                }
-                al.add(index);
-                target_arr[i]=arr[index];
-                al1.add(arr[index]);
-                str=str+target_arr[i]+" ";
-            }
-            str.trim();
-            tv_test.setText(str);
-        }
-        else
-        {
-            tv_head.setText("Delayed Recall");
-            tv_test.setText("Recall the words that displayed during the memory");
-        }
+
+        // check if first time and load the necessary string
+        setTestStrings();
+
         imgclickspeak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,8 +68,9 @@ public class Memory_Delayedrecall extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ScoreMaintainer.isFirst)
+                if(scoreMaintainer.isFirstDelayedRecall())
                 {
+                    scoreMaintainer.setFirstDelayedRecall(false); // next time will be second
                     Intent intent=new Intent(Memory_Delayedrecall.this,Attentation_repeatingDigit.class);
                     startActivity(intent);
                 }
@@ -101,6 +86,42 @@ public class Memory_Delayedrecall extends AppCompatActivity {
         
         
 
+    }
+
+    private void setTestStrings() {
+        /*Check for first or second time and return the words to be used*/
+        if (scoreMaintainer.isFirstDelayedRecall()) {
+            // first time getting into this page
+            // generate new words
+            Random r=new Random();
+            tv_head.setText("Memory");
+            for(int i=0;i<5;i++)
+            {
+                int index = r.nextInt(arr.length-1);
+                if(al.contains(index))
+                {
+                    i--;
+                    continue;
+                }
+                al.add(index);
+                target_arr[i]=arr[index];
+                al1.add(arr[index]);
+                str=str+target_arr[i]+" ";
+            }
+            str.trim();
+            tv_test.setText(str);
+
+            //TODO: save the string when generated
+            scoreMaintainer.setDelayedRecallString(str);
+        } else {
+            // second time - delayed recall
+            tv_head.setText("Delayed Recall");
+            tv_test.setText("Recall the words that displayed during the memory");
+
+            // string from first time
+            String string = scoreMaintainer.getDelayedRecallString();
+            //TODO: load to the correct variable
+        }
     }
 
     public void evalvate() 
@@ -120,20 +141,21 @@ public class Memory_Delayedrecall extends AppCompatActivity {
                count++; 
             }
         }
-        if(ScoreMaintainer.isFirst)
-        {
-            if(count==5) score_memory=2;
-            else if(count>=3) score_memory=1;
-            else score_memory=0;
-            ScoreMaintainer.isFirst=false;
-            System.out.println(score_memory);
-        }
-        else
-        {
-            score_delayed_recall=count;
-            ScoreMaintainer.isFirst=true;
-            System.out.println(score_delayed_recall);
-        }
+        //TODO: correct it
+//        if(ScoreMaintainer.isFirst)
+//        {
+//            if(count==5) score_memory=2;
+//            else if(count>=3) score_memory=1;
+//            else score_memory=0;
+//            ScoreMaintainer.isFirst=false;
+//            System.out.println(score_memory);
+//        }
+//        else
+//        {
+//            score_delayed_recall=count;
+//            ScoreMaintainer.isFirst=true;
+//            System.out.println(score_delayed_recall);
+//        }
     }
 
     @Override
