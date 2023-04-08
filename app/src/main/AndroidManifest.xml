@@ -8,8 +8,23 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application android:theme="@style/Theme.MyApplication">
+        <activity
 
 
+
+            android:name=".AnalyticsPage"
+            android:exported="false" />
+        <activity
+
+
+
+            android:name=".Memory_Delayedrecall"
+            android:exported="false" />
+
+        <activity
+            android:name=".StartPage"
+
+            android:exported="false" />
         <activity
             android:name=".Orientation"
             android:exported="false"

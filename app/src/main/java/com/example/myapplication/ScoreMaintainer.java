@@ -25,12 +25,12 @@ public class ScoreMaintainer {
 
     private static ScoreMaintainer object;
     private static HashMap<String, Integer> scores;
-<<<<<<< HEAD
+
     public static boolean isFirst=true;
-=======
+
     private static HistoryInstance historyInstance;
     private static long startTimestamp;
->>>>>>> 94e2a0d196df7bee0050c2263210bb82c98bc05a
+
 
     // Maintain hashmap for each different page
     // Inside the each activity java class has a string TEST_NAME which identifies it
@@ -124,7 +124,7 @@ public class ScoreMaintainer {
         return ref.getId();
     }
 
-    @androidx.annotation.NonNull
+
     @Override
     public String toString() {
         return historyInstance.toString();
