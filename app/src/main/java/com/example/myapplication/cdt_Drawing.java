@@ -33,11 +33,13 @@ public class cdt_Drawing extends AppCompatActivity {
     private Canvas canva;
     private Paint paint = new Paint();
     private Button button;
+    private View rootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cdt_drawing);
+
         ActivityCompat.requestPermissions(this
                 ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -49,12 +51,20 @@ public class cdt_Drawing extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView5);
         imageView_clr=findViewById(R.id.imageView4);
+
         imageView_clr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 canva.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             }
         });
+
+//        rootView = findViewById(R.id.cdtRoot);
+//
+//        Utils.showInstruction(
+//                imageView_clr,
+//                "Draw a clock which shows time 10 past 11"
+//        );
     }
 
     private void drawPaintSketchImage(){

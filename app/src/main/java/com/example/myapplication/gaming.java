@@ -105,7 +105,10 @@ public class gaming extends AppCompatActivity {
         // Delay the showing of pop up view, to let the view created first
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                showInstruction(findViewById(R.id.gamingRootLayout));
+                Utils.showInstruction(
+                        findViewById(R.id.gamingRootLayout),
+                        "Press the buttons in the increasing order intertwining number then letters\nExample: 1 -> A -> 2 ..."
+                );
             }
         }, 100);
     }
@@ -115,35 +118,6 @@ public class gaming extends AppCompatActivity {
         ans.add(btn.getText().toString());
         btn.setEnabled(false);
         btn.setVisibility(View.INVISIBLE);
-    }
-
-    public void showInstruction(View view) {
-
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.game_pop_up, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-        popupWindow.setElevation(20);
-
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
-        });
     }
 
     public void reset(View view) {
