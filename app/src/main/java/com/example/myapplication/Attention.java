@@ -22,7 +22,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class Attention extends AppCompatActivity {
     private int MICROPHONE_PERMISSION_CODE=400;
@@ -31,7 +33,7 @@ public class Attention extends AppCompatActivity {
     TextView textview3;
     protected static final int RESULT_SPEECH=1;
     public ImageButton btnSpeak;
-    int count=0;
+    int count=0, completedCount, totalCount;
     int Score=0;
     ArrayList<String> text;
     String [] str_arr;
@@ -69,7 +71,7 @@ public class Attention extends AppCompatActivity {
         });
         Random rnd = new Random();
         c = (char) ('a' + rnd.nextInt(26));
-        textview3.setText("Name maximum number of words that begins with "+c);
+        textview3.setText(String.format("Name maximum number of words that begins with '%s'", c));
         buttonn=findViewById(R.id.button12);
         JsonArrayRequest jsonArrayRequest;
         buttonn.setOnClickListener(new View.OnClickListener() {
@@ -77,42 +79,23 @@ public class Attention extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Attention.this, Abstraction.class);
                 startActivity(intent);
-                str_final.trim();
+                str_final = str_final.trim();
                 System.out.println(str_final);
                 str_arr=str_final.split(" ");
-                for(int i=0;i<str_arr.length;i++)
-                {
-                    System.out.println(str_arr[i]);
-                    if(str_arr[i].charAt(0)==c)
-                    {
-                        evalvate(str_arr[i]);
+                str_arr = removeDuplicate(str_arr);
+
+                for (String s : str_arr) {
+                    System.out.println(s);
+                    if (s.charAt(0) == c) {
+                        count++;
                     }
                 }
+
                 if(count>=11) Score=1;
                 ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
-                scoreMaintainer.updateScore(TEST_NAME,Score);
+                scoreMaintainer.updateScore(TEST_NAME, Score);
                 System.out.println("SCORE: "+scoreMaintainer.getScore(TEST_NAME));
-//                String URL="https://api.dictionaryapi.dev/api/v2/entries/en/="+"Venom";
-//                JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        try {
-//                            JSONObject jsonObject=response.getJSONObject(0);
-//                            String word=jsonObject.getString("word");
-//                            System.out.println(word);
-//                            }
-//                        catch (Exception e)
-//                        {
-//                            System.out.println(e);
-//                        }
-//
-//                    }
-//                },new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//               });
+
                 finish();
             }
         });
@@ -128,13 +111,17 @@ public class Attention extends AppCompatActivity {
                 if (resultCode == RESULT_OK && data != null) {
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     str_final=str_final+text.get(0)+" ";
-                    //str_arr=str.split(" ");
-
-
                 }
                 break;
 
         }
+    }
+
+    private String[] removeDuplicate(String[] words) {
+        Set<String> set = new HashSet<>();
+        for(String word: words) set.add(word);
+
+        return set.toArray(new String[]{});
     }
 
     public void evalvate(String str) {
@@ -156,6 +143,7 @@ public class Attention extends AppCompatActivity {
                     System.out.println(count);
 
                     //System.out.println(origin);
+                    completedCount++;
                 } catch (Exception e) {
                     System.out.println("_____________________________________________________________");
                     System.out.println(e);
