@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class cdt_Drawing extends AppCompatActivity {
     private ImageView imageView,imageView_clr;
@@ -133,7 +134,7 @@ public class cdt_Drawing extends AppCompatActivity {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        File file = new File(Environment.getExternalStorageDirectory(), "myimage1.png");
+        File file = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), Calendar.getInstance().getTime().toString() + ".png");
         try
         {
             FileOutputStream stream = new FileOutputStream(file);
