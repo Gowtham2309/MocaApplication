@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -119,8 +120,7 @@ public class Attention extends AppCompatActivity {
 
     private String[] removeDuplicate(String[] words) {
         Set<String> set = new HashSet<>();
-        for(String word: words) set.add(word);
-
+        Collections.addAll(set, words);
         return set.toArray(new String[]{});
     }
 

@@ -114,7 +114,7 @@ public class gaming extends AppCompatActivity {
         Button btn = (Button) view;
         ans.add(btn.getText().toString());
         btn.setEnabled(false);
-        btn.setVisibility(View.GONE);
+        btn.setVisibility(View.INVISIBLE);
     }
 
     public void showInstruction(View view) {

@@ -192,9 +192,10 @@ public class Memory_Delayedrecall extends AppCompatActivity {
 
           if(count>=5) score_delayed_recall=5;
           else score_delayed_recall=count;
-            scoreMaintainer.updateScore("DELAYED RECALL",score_delayed_recall);
-            System.out.println("SCORE: "+scoreMaintainer.getScore("DELAYED RECALL"));
-            System.out.println(score_delayed_recall);
+
+          scoreMaintainer.updateScore("DELAYED RECALL",score_delayed_recall);
+          System.out.println("SCORE: "+scoreMaintainer.getScore("DELAYED RECALL"));
+          System.out.println(score_delayed_recall);
         }
     }
 
