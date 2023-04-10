@@ -146,7 +146,7 @@ public class gaming extends AppCompatActivity {
         }
         System.out.println(requiredOutput);
         System.out.println(userAnswer);
-        int correctCount = lcs(
+        int correctCount = Utils.lcs(
                 requiredOutput, userAnswer.toString(), requiredOutput.length(), userAnswer.length()
         );
         System.out.println(correctCount);
@@ -154,27 +154,4 @@ public class gaming extends AppCompatActivity {
         if (((float) correctCount / requiredOutput.length()) + allowedErrorPercentage >= 1.0f) return 1;
         return 0;
     }
-
-    int lcs(String X, String Y, int m, int n)
-    {
-        int[][] L = new int[m + 1][n + 1];
-
-        // Following steps build L[m+1][n+1] in bottom up
-        // fashion. Note that L[i][j] contains length of LCS
-        // of X[0..i-1] and Y[0..j-1]
-        for (int i = 0; i <= m; i++) {
-            for (int j = 0; j <= n; j++) {
-                if (i == 0 || j == 0)
-                    L[i][j] = 0;
-                else if (X.charAt(i - 1) == Y.charAt(j - 1))
-                    L[i][j] = L[i - 1][j - 1] + 1;
-                else
-                    L[i][j] = max(L[i - 1][j], L[i][j - 1]);
-            }
-        }
-        return L[m][n];
-    }
-
-    // Utility function to get max of 2 integers
-    int max(int a, int b) { return (a > b) ? a : b; }
 }
