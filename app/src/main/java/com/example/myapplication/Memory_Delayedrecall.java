@@ -114,6 +114,7 @@ public class Memory_Delayedrecall extends AppCompatActivity {
             }
             str.trim();
             tv_test.setText(str);
+            tv_head.setText("Spell the words present below, try to remember them");
 
             //TODO: save the string when generated
             scoreMaintainer.setDelayedRecallString(str);
