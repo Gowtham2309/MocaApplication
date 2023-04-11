@@ -150,8 +150,7 @@ public class gaming extends AppCompatActivity {
                 requiredOutput, userAnswer.toString(), requiredOutput.length(), userAnswer.length()
         );
         System.out.println(correctCount);
-        float allowedErrorPercentage = 0.1f;
-        if (((float) correctCount / requiredOutput.length()) + allowedErrorPercentage >= 1.0f) return 1;
+        if (correctCount == requiredOutput.length()) return 1;
         return 0;
     }
 }
