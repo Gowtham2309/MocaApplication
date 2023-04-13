@@ -9,21 +9,16 @@
 
     <application android:theme="@style/Theme.MyApplication">
         <activity
-
-
-
+            android:name=".Cube"
+            android:exported="false" />
+        <activity
             android:name=".AnalyticsPage"
             android:exported="false" />
         <activity
-
-
-
             android:name=".Memory_Delayedrecall"
             android:exported="false" />
-
         <activity
             android:name=".StartPage"
-
             android:exported="false" />
         <activity
             android:name=".Orientation"
