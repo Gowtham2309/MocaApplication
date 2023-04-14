@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Cube">
 
-    <TextView
-        style="@style/contentText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:text="Draw a cube"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/cubeCanvas"
         android:layout_width="0dp"
@@ -26,6 +15,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!--TextView
+        style="@style/contentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Draw a cube"
+        app:layout_constraintBottom_toTopOf="@+id/cubeBtnSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cubeCanvas" /-->
 
     <Button
         android:id="@+id/cubeBtnSave"
