@@ -10,6 +10,10 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -151,6 +155,23 @@ public class cdt_Drawing extends AppCompatActivity {
         Intent intent=new Intent(cdt_Drawing.this,Cube.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.help_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.help) {
+            Utils.showInstruction(imageView, "Draw a clock with numbers showing time 10 past 11 on the screen\n"+
+                    "Use 'X' button to clear the screen");
+            return true;
+        }
+        return false;
     }
 
 }
