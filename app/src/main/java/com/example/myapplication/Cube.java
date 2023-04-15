@@ -34,6 +34,9 @@ public class Cube extends AppCompatActivity {
     private Bitmap bit_map;
     Canvas canva;
 
+    final static String CUBE_URL = "http://kamalrajTen.pythonanywhere.com/cube/";
+    final static String TEST_NAME = "CUBE DRAWING";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +127,7 @@ public class Cube extends AppCompatActivity {
             Toast.makeText(this, "Error saving image", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+        Utils.uploadImageToStorageAndScore(file, getApplicationContext(), "cube", TEST_NAME, CUBE_URL);
         Intent intent=new Intent(this,gaming.class);
         startActivity(intent);
         finish();
