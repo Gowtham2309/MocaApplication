@@ -12,6 +12,18 @@
         android:padding="10dp"
         tools:context=".AnalyticsPage">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/patientSearch"
+            android:hint="Select patient"
+            android:padding="12dp"
+            android:gravity="center_vertical"
+            android:drawableEnd="@drawable/down_arrow"
+            style="@style/contentText"
+            android:layout_margin="10dp"
+            />
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
