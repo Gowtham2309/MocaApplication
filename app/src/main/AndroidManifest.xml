@@ -7,23 +7,19 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <application android:theme="@style/Theme.MyApplication">
+    <application android:theme="@style/Theme.MyApplication"
+        android:usesCleartextTraffic="true">
         <activity
-
-
-
+            android:name=".Cube"
+            android:exported="false" />
+        <activity
             android:name=".AnalyticsPage"
             android:exported="false" />
         <activity
-
-
-
             android:name=".Memory_Delayedrecall"
             android:exported="false" />
-
         <activity
             android:name=".StartPage"
-
             android:exported="false" />
         <activity
             android:name=".Orientation"

@@ -113,33 +113,46 @@ public class Attentation_repeatingDigit extends AppCompatActivity
                 startActivity(intent);
 
                 //forward score calculation
-                int i=0,j=0;
-                while(i < arr1.length && i < fwd.size())
-                {
-                    Integer inti=0;
-                    if(arr1[i]!=" ") inti=Integer.parseInt(arr1[i]);
-                    else continue;
-                    if(inti.equals(fwd.get(i)+1)) countf++;
-                    System.out.println(arr1[i]+" "+fwd.get(i));
-                    i++;
-                }
+//                int i=0,j=0;
+//                while(i < arr1.length && i < fwd.size())
+//                {
+//                    Integer inti=0;
+//                    if(arr1[i]!=" ") inti=Integer.parseInt(arr1[i]);
+//                    else continue;
+//                    if(inti.equals(fwd.get(i)+1)) countf++;
+//                    System.out.println(arr1[i]+" "+fwd.get(i));
+//                    i++;
+//                }
+                countf = Utils.lcs(
+                        Utils.arrToString(arr1),
+                        Utils.arrToString(fwd),
+                        arr1.length,
+                        fwd.size()
+                );
                 System.out.println(countf);
                 Collections.reverse(rev);
-                i=0;
-                System.out.println(rev);
-                System.out.println(arr2);
-                while(i < arr2.length && i < rev.size())
-                {
-                    Integer inti=0;
-                    if(arr2[i]!=" ") {
-                        inti=Integer.parseInt(arr2[i]);
-                    }
-                    else continue;
-                    if(inti.equals(rev.get(i)+1)) countb++;
-                    System.out.println(arr2[i]+" "+rev.get(i));
-                    i++;
-                }
+//                i=0;
+//                System.out.println(rev);
+//                System.out.println(arr2);
+//                while(i < arr2.length && i < rev.size())
+//                {
+//                    Integer inti=0;
+//                    if(arr2[i]!=" ") {
+//                        inti=Integer.parseInt(arr2[i]);
+//                    }
+//                    else continue;
+//                    if(inti.equals(rev.get(i)+1)) countb++;
+//                    System.out.println(arr2[i]+" "+rev.get(i));
+//                    i++;
+//                }
 //                for(int j=arr2.length,i=0;j>=0,i<)
+                countb = Utils.lcs(
+                        Utils.arrToString(arr2),
+                        Utils.arrToString(rev),
+                        arr2.length,
+                        rev.size()
+                );
+
                 System.out.println(countb);
                 if(countf>=4) Scoref=1;
                 if(countb>=2) Scoreb=1;

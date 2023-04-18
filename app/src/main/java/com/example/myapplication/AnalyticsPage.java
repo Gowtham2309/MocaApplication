@@ -2,13 +2,22 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,7 +76,9 @@ public class AnalyticsPage extends AppCompatActivity {
     Set<String> visibleTests = new HashSet<>();
     List<HistoryInstance> historyInstances;
     List<Button> btnList;
-    TextView txtLoading, txtHighestScore;
+    TextView txtLoading, txtHighestScore, searchBox;
+    Dialog dialog;
+    String currentSelectedPatient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +94,9 @@ public class AnalyticsPage extends AppCompatActivity {
         txtHighestScore = findViewById(R.id.analyticsHighestScore);
         context = this;
         btnList = new ArrayList<>();
+        searchBox = findViewById(R.id.patientSearch);
+        searchBox.setEnabled(false); // until loading all data need to be disabled
+        currentSelectedPatient = "";
 
         setColorMapping();
 
@@ -138,18 +152,26 @@ public class AnalyticsPage extends AppCompatActivity {
                     for(DocumentSnapshot snapshot: queryDocumentSnapshots.getDocuments()) {
                         historyInstances.add(snapshot.toObject(HistoryInstance.class));
                     }
+                    System.out.println("===== history instances ======");
+                    System.out.println(historyInstances);
 
                     removeLoading();
+                    setupPatientSearch();
 
                     // now enable all the buttons
                     populateFlexButtonGroup(context);
                     setHighestScore();
+                    searchBox.setEnabled(true);
                 }).addOnFailureListener(unused -> {
                     Toast.makeText(getApplicationContext(), "Error loading data", Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void loadChart() {
+        if (currentSelectedPatient.equals("")) {
+            Toast.makeText(this, "Select a patient", Toast.LENGTH_SHORT).show();
+            return;
+        }
         // create entries
         Map<String, List<Entry>> entryLists = new HashMap<>();
         for(String test: visibleTests) entryLists.put(test, new ArrayList<>());
@@ -158,6 +180,7 @@ public class AnalyticsPage extends AppCompatActivity {
         ArrayList<String> timeStamps = new ArrayList<>();
 
         for(HistoryInstance instance: historyInstances) {
+            if (!instance.getPatientName().equals(currentSelectedPatient)) continue;
             Map<String, Integer> scores = instance.getScores();
             scores.put("totalScore", instance.getTotalScore());
             timeStamps.add(instance.getTimeStamp());
@@ -188,19 +211,23 @@ public class AnalyticsPage extends AppCompatActivity {
         LineData lineData = new LineData(dataSets);
         lineChart.setData(lineData);
 
+        System.out.println("===== timestamps =====");
+        System.out.println(timeStamps);
+
         // format x-axis text to dates
-        ValueFormatter formatter = new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                Date date = new Date(Long.parseLong(timeStamps.get((int) value)));
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
-                return dateFormat.format(date);
-            }
-        };
+//        ValueFormatter formatter = new ValueFormatter() {
+//            @Override
+//            public String getAxisLabel(float value, AxisBase axis) {
+//                System.out.println("Xaxis value: "+value);
+//                Date date = new Date(Long.parseLong(timeStamps.get((int) value)));
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
+//                return dateFormat.format(date);
+//            }
+//        };
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setGranularity(1f);
-        xAxis.setValueFormatter(formatter);
+//        xAxis.setValueFormatter(formatter);
         xAxis.setDrawGridLines(false);
 
         lineChart.getAxisLeft().setGranularity(1f);
@@ -217,6 +244,13 @@ public class AnalyticsPage extends AppCompatActivity {
         } else {
             visibleTests.add(test);
             btn.setBackgroundResource(R.drawable.button_background_semi_rounded);
+        }
+    }
+
+    private void removeAllVisibleTests() {
+        visibleTests.clear();
+        for(Button btn: btnList) {
+            btn.setBackgroundResource(R.drawable.button_background);
         }
     }
 
@@ -243,5 +277,67 @@ public class AnalyticsPage extends AppCompatActivity {
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             );
         }
+    }
+
+    private List<String> getPatientNames() {
+        Set<String> set = new HashSet<>();
+        for(HistoryInstance instance: historyInstances) {
+            set.add(instance.getPatientName());
+        }
+
+        return new ArrayList<>(set);
+    }
+
+    private void setupPatientSearch() {
+        List<String> patients = getPatientNames();
+        searchBox.setOnClickListener(view -> {
+            dialog = new Dialog(this);
+            dialog.setContentView(R.layout.dialog_searchable_spinner);
+            // set custom height and width
+            dialog.getWindow().setLayout(650,800);
+            // set transparent background
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            // show dialog
+            dialog.show();
+
+            EditText editText=dialog.findViewById(R.id.search_box);
+            ListView listView=dialog.findViewById(R.id.patient_list_view);
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_list_item_1, patients
+            );
+
+            listView.setAdapter(adapter);
+
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    adapter.getFilter().filter(s);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+            listView.setOnItemClickListener((parent, view1, position, id) -> {
+                // when item selected from list
+                // set selected item on textView
+                String patient = adapter.getItem(position);
+                searchBox.setText(patient);
+                currentSelectedPatient = patient;
+                removeAllVisibleTests();
+                loadChart();
+
+                // Dismiss dialog
+                dialog.dismiss();
+            });
+        });
     }
 }
