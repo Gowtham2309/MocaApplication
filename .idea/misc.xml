@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MocaApplication/app/src/main/res/layout/activity_abstraction.xml" value="0.1358695652173913" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MocaApplication/app/src/main/res/layout/activity_attentation_repeating_digit.xml" value="0.1" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MocaApplication/app/src/main/res/layout/activity_cdt_drawing.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MocaApplication/app/src/main/res/layout/activity_language_repeat_sentence.xml" value="0.11367753623188406" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MocaApplication/app/src/main/res/layout/activity_letter_identification.xml" value="0.1358695652173913" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MocaApplication/app/src/main/res/layout/activity_memory_delayedrecall.xml" value="0.22" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MocaApplication/app/src/main/res/layout/activity_naming.xml" value="0.1" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MocaApplication/app/src/main/res/layout/activity_orientation.xml" value="0.1" />
