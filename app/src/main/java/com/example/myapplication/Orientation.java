@@ -28,6 +28,7 @@ public class Orientation extends AppCompatActivity
     String[] curr_date=str.split("-");
     Button btnFinish;
     int Score=0,count=0;
+    final static String TEST_NAME = "ORIENTATION";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -128,6 +129,7 @@ public class Orientation extends AppCompatActivity
         btnFinish.setOnClickListener((View v) -> {
             // upload the score to the firebase here, as we need to pass the time and phone number
             // to the final score page - ExpandedHistory
+            // TODO: also do the evaluation in orientation
             SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedPrefsName), Context.MODE_PRIVATE);
             String phoneNumber = prefs.getString(getString(R.string.login), "");
 

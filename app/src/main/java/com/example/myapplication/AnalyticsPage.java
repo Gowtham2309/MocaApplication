@@ -56,12 +56,13 @@ public class AnalyticsPage extends AppCompatActivity {
     // TODO: add the remaining test names
     String[] testNames = new String[]{
             "totalScore",
-            //cdt_Drawing.TEST_NAME,
+            cdt_Drawing.TEST_NAME,
+            Cube.TEST_NAME,
             gaming.TEST_NAME,
             Attention.TEST_NAME,
             Letter_Identification.TEST_NAME,
             Naming.TEST_NAME,
-            SubtractionMain.TEST_NAME,
+            SubtractionMain.TEST_NAME
     };
 
     int[] colors = new int[]{
@@ -69,7 +70,9 @@ public class AnalyticsPage extends AppCompatActivity {
             R.color.red,
             R.color.thistle,
             R.color.davysGray,
-            R.color.teal_200
+            R.color.teal_200,
+            R.color.green,
+            R.color.purple_500
     };
     Map<String, Integer> colorMap;
 
@@ -114,6 +117,8 @@ public class AnalyticsPage extends AppCompatActivity {
         colorMap.put(Letter_Identification.TEST_NAME, R.color.purple_500);
         colorMap.put(Naming.TEST_NAME, R.color.jetStream);
         colorMap.put(SubtractionMain.TEST_NAME, R.color.teal_200);
+        colorMap.put(cdt_Drawing.TEST_NAME, R.color.teal_700);
+        colorMap.put(Cube.TEST_NAME, R.color.orange);
         colorMap.put("totalScore", R.color.green);
     }
 
