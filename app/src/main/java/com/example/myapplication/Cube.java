@@ -121,13 +121,13 @@ public class Cube extends AppCompatActivity {
             stream.flush();
             stream.close();
             Toast.makeText(this, "Image saved", Toast.LENGTH_SHORT).show();
+            Utils.uploadImageToStorageAndScore(file, getApplicationContext(), "cube", TEST_NAME, CUBE_URL);
         }
         catch (IOException e)
         {
             Toast.makeText(this, "Error saving image", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-        Utils.uploadImageToStorageAndScore(file, getApplicationContext(), "cube", TEST_NAME, CUBE_URL);
         Intent intent=new Intent(this,gaming.class);
         startActivity(intent);
         finish();

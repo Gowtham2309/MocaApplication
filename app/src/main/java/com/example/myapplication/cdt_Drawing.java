@@ -40,6 +40,9 @@ public class cdt_Drawing extends AppCompatActivity {
     private Button button;
     private View rootView;
 
+    final static String CDT_URL = "http://kamalrajTen.pythonanywhere.com/cdt/";
+    final static String TEST_NAME = "CLOCK DRAWING TEST";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +149,13 @@ public class cdt_Drawing extends AppCompatActivity {
             stream.flush();
             stream.close();
             Toast.makeText(this, "Image saved", Toast.LENGTH_SHORT).show();
+            Utils.uploadImageToStorageAndScore(
+                    file,
+                    getApplicationContext(),
+                    "cdt",
+                    TEST_NAME,
+                    CDT_URL
+            );
         }
         catch (IOException e)
         {

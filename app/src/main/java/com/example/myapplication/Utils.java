@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -164,6 +165,7 @@ public class Utils {
             Toast.makeText(ctx, "Error calculating the score for test "+testName, Toast.LENGTH_SHORT).show();
             System.out.println("Error on getting the score --------");
             System.out.println(error.getMessage());
+            System.out.println(error);
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -172,6 +174,13 @@ public class Utils {
                 return params;
             }
         };
+
+        req.setRetryPolicy(new DefaultRetryPolicy(
+                4000 * 1000 * 60, // 4 min
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
         MySingleton.getInstance(ctx).addToRequestQueue(req);
     }
 }
