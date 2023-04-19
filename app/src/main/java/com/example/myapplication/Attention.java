@@ -5,6 +5,10 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -160,5 +164,28 @@ public class Attention extends AppCompatActivity {
             }
         });
         MySingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.help_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.help) {
+            Utils.showInstruction(
+                    btnSpeak,
+                    String.format(
+                            "Click the mic button and tell the maximum number of words beginning with %s\n\n" +
+                                    "Better tell single word for each mic clicks",
+                            c
+                    )
+            );
+            return true;
+        }
+        return false;
     }
 }

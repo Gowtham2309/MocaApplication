@@ -62,7 +62,10 @@ public class AnalyticsPage extends AppCompatActivity {
             Attention.TEST_NAME,
             Letter_Identification.TEST_NAME,
             Naming.TEST_NAME,
-            SubtractionMain.TEST_NAME
+            SubtractionMain.TEST_NAME,
+            Orientation.TEST_NAME,
+            Memory_Delayedrecall.TEST_NAME_MEMORY,
+            Memory_Delayedrecall.TEST_NAME_DELAYEDRECALL,
     };
 
     int[] colors = new int[]{
@@ -119,6 +122,9 @@ public class AnalyticsPage extends AppCompatActivity {
         colorMap.put(SubtractionMain.TEST_NAME, R.color.teal_200);
         colorMap.put(cdt_Drawing.TEST_NAME, R.color.teal_700);
         colorMap.put(Cube.TEST_NAME, R.color.orange);
+        colorMap.put(Orientation.TEST_NAME, R.color.bright_green);
+        colorMap.put(Memory_Delayedrecall.TEST_NAME_MEMORY, R.color.pink);
+        colorMap.put(Memory_Delayedrecall.TEST_NAME_DELAYEDRECALL, R.color.yellow);
         colorMap.put("totalScore", R.color.green);
     }
 
@@ -134,10 +140,11 @@ public class AnalyticsPage extends AppCompatActivity {
         flexButtonGroup.removeView(txtLoading);
     }
 
-    private void setHighestScore() {
+    private void setHighestScore(String patientName) {
         int highestScore = 0;
         for(HistoryInstance instance: historyInstances) {
-            highestScore = Math.max( highestScore, instance.getTotalScore() );
+            if (instance.getPatientName().equals(patientName))
+                highestScore = Math.max( highestScore, instance.getTotalScore() );
         }
         txtHighestScore.setText(Integer.toString(highestScore));
     }
@@ -165,7 +172,6 @@ public class AnalyticsPage extends AppCompatActivity {
 
                     // now enable all the buttons
                     populateFlexButtonGroup(context);
-                    setHighestScore();
                     searchBox.setEnabled(true);
                 }).addOnFailureListener(unused -> {
                     Toast.makeText(getApplicationContext(), "Error loading data", Toast.LENGTH_SHORT).show();
@@ -338,6 +344,7 @@ public class AnalyticsPage extends AppCompatActivity {
                 searchBox.setText(patient);
                 currentSelectedPatient = patient;
                 removeAllVisibleTests();
+                setHighestScore(patient);
                 loadChart();
 
                 // Dismiss dialog

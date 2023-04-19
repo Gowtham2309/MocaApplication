@@ -18,4 +18,7 @@
     <color name="red">#FF5C5C</color>
     <color name="green">#12BA69</color>
     <color name="orange">#FFA500</color>
+    <color name="yellow">#FFCE30</color>
+    <color name="bright_green">#CFF800</color>
+    <color name="pink">#FF96C5</color>
 </resources>
