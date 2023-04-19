@@ -34,6 +34,8 @@ public class Memory_Delayedrecall extends AppCompatActivity {
     ImageButton imgclickspeak;
     ScoreMaintainer scoreMaintainer;
     int count=0,score_memory=0,score_delayed_recall=0;
+    final static String TEST_NAME_MEMORY="MEMORY";
+    final static String TEST_NAME_DELAYEDRECALL="DELAYED RECALL";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +118,7 @@ public class Memory_Delayedrecall extends AppCompatActivity {
             tv_test.setText(str);
             tv_head.setText("Spell the words present below, try to remember them");
 
-            //TODO: save the string when generated
+
             scoreMaintainer.setDelayedRecallString(str);
         } else {
             // second time - delayed recall
@@ -167,7 +169,7 @@ public class Memory_Delayedrecall extends AppCompatActivity {
             else if(count>=3) score_memory=1;
             else score_memory=0;
             scoreMaintainer.setFirstDelayedRecall(false);
-            scoreMaintainer.updateScore("MEMORY", score_memory);
+            scoreMaintainer.updateScore(TEST_NAME_MEMORY, score_memory);
             System.out.println("SCORE: "+scoreMaintainer.getScore("MEMORY"));
             System.out.println(score_memory);
         }
@@ -194,7 +196,7 @@ public class Memory_Delayedrecall extends AppCompatActivity {
           if(count>=5) score_delayed_recall=5;
           else score_delayed_recall=count;
 
-          scoreMaintainer.updateScore("DELAYED RECALL",score_delayed_recall);
+          scoreMaintainer.updateScore(TEST_NAME_DELAYEDRECALL,score_delayed_recall);
           System.out.println("SCORE: "+scoreMaintainer.getScore("DELAYED RECALL"));
           System.out.println(score_delayed_recall);
         }
