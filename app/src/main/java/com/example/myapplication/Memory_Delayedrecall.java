@@ -83,6 +83,7 @@ public class Memory_Delayedrecall extends AppCompatActivity {
                     startActivity(intent);
                 }
                 evalvate();
+                finish();
             }
             
         });

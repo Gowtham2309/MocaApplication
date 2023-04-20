@@ -32,7 +32,8 @@ public class Abstraction extends AppCompatActivity {
                 str2.toLowerCase();
                 if(str1.equals("vehicle") || str1.equals("transportation") || str1.equals("transport"))
                     score++;
-                if(str2.equals("measurement") || str2.equals("measure") || str2.equals("measuring instrument"))
+                if(str2.equals("measurement") || str2.equals("measure") || str2.equals("measuring instrument") ||
+                    str2.equals("units"))
                     score++;
                 System.out.println(score);
                 ScoreMaintainer scoreMaintainer = ScoreMaintainer.getInstance();
